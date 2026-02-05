@@ -1,24 +1,339 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"><title>BITTER & WHITE</title><link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet"><style>:root{--main-pink:#ff80ab;--black-choco:#3e2723;--white-choco:#fff9c4}body,html{margin:0;padding:0;height:100%;font-family:'Yomogi',cursive;background-color:#fce4ec;overflow:hidden;touch-action:none}.screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;position:relative}.piece-title{width:16px;height:32px;border-radius:2px;position:fixed;transition:transform 3.5s cubic-bezier(0.22,1,0.36,1),opacity 3s;z-index:1000}.black-piece-title{background:var(--black-choco);border:1.5px solid #5d4037}.white-piece-title{background:var(--white-choco);border:1.5px solid #fff}#game-wrapper{display:none;width:100vw;height:100vh;background:#000;position:fixed;top:0;left:0;z-index:2000;flex-direction:column;align-items:center;justify-content:center}#game-container{position:relative;height:95vh;width:calc(95vh*1153/1878);max-width:100vw;background-color:#1a1a1a;overflow:hidden;box-shadow:0 0 40px #000;transition:height 0.5s}#bg-image-layer{position:absolute;top:0;left:0;width:100%;height:calc(100%*1728/1878);background-size:100% 100%;z-index:2010}#yajuu-curtain{position:absolute;top:0;left:0;width:100%;height:100%;background-size:100% 100%;z-index:2015;display:none;transition:clip-path 1.0s linear}.bitter-heart,.white-heart{position:absolute;z-index:2020;display:flex;align-items:center;justify-content:center;pointer-events:none;animation:heartBeat 1.2s infinite;cursor:pointer}.bitter-heart::before,.bitter-heart::after{content:"";position:absolute;top:0;width:50%;height:80%;background:var(--black-choco);border:2.5px solid #5d4037}.bitter-heart::before{left:50%;transform:rotate(-45deg);transform-origin:0 100%}.bitter-heart::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}.white-heart::before,.white-heart::after{content:"";position:absolute;top:0;width:50%;height:80%;background:var(--white-choco);border:2.5px solid #fff}.white-heart::before{left:50%;transform:rotate(-45deg);transform-origin:0 100%}.white-heart::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}.normal-heart::before,.normal-heart::after{border-radius:50px 50px 0 0}.large-heart::before,.large-heart::after{border-radius:400px 400px 0 0}.heart-active{pointer-events:auto!important}#game-canvas{width:100%;height:100%;display:block;position:absolute;top:0;left:0;z-index:2100;pointer-events:auto;background:transparent}.howawa{position:absolute;color:var(--main-pink);pointer-events:none;z-index:3000;animation:a 1.5s ease-out forwards;font-size:2rem}@keyframes a{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-100px) scale(1.5);opacity:0}}.canvas-pass{pointer-events:none!important}#volume-controls{position:fixed;top:20px;right:20px;z-index:3000;display:flex;flex-direction:column;gap:10px;background:rgba(255,255,255,0.8);padding:10px;border-radius:10px}#hud-left{position:absolute;top:20px;left:20px;z-index:3000;display:none;align-items:center;gap:10px}.hud-ball{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.5);box-shadow:2px 2px 5px rgba(0,0,0,0.3)}.vol-bar-wrapper{display:flex;align-items:flex-end;gap:4px;height:30px;cursor:pointer}.vol-bar{width:8px;background:#ddd;transition:background .2s}.vol-bar.active{background:var(--main-pink)}.vol-bar:nth-child(1){height:20%}.vol-bar:nth-child(2){height:40%}.vol-bar:nth-child(3){height:60%}.vol-bar:nth-child(4){height:80%}.vol-bar:nth-child(5){height:100%}.game-btn{display:none;position:absolute;bottom:15px;left:50%;transform:translateX(-50%);padding:8px 25px;font-family:'Yomogi',cursive;font-size:1.2rem;background:var(--main-pink);color:#fff;border:2px solid #fff;border-radius:50px;cursor:pointer;z-index:2800}.input-container{background:#fff;padding:30px;border-radius:20px;width:min(400px,90vw);z-index:50}.age-row,.input-row{margin-bottom:20px;font-size:1.8rem;color:var(--main-pink);display:flex;align-items:center;justify-content:center;gap:10px}input[type="text"]{font-family:'Yomogi',cursive;border:3px solid var(--main-pink);border-radius:12px;padding:5px;text-align:center;color:var(--main-pink);font-size:1.8rem}.heart-wrapper{position:relative;width:70px;height:65px;animation:heartBeat 1s infinite;transform:scale(0.8)}.heart-wrapper::before,.heart-wrapper::after{content:"";position:absolute;top:0;width:35px;height:55px;background:var(--main-pink);border-radius:35px 35px 0 0}.heart-wrapper::before{left:35px;transform:rotate(-45deg);transform-origin:0 100%}.heart-wrapper::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}#passInput{position:relative;width:50px;height:50px;z-index:10;border:none;background:0 0;color:#fff;font-size:2rem;text-align:center;outline:none}.btn{padding:12px 40px;font-size:1.5rem;font-family:'Yomogi',cursive;background:var(--main-pink);color:#fff;border:none;border-radius:50px;cursor:pointer}@keyframes heartBeat{0%,100%{transform:scale(0.8)}20%{transform:scale(1.0)}}#dog-layer{display:none;position:absolute;top:0;left:0;width:100%;height:100%;z-index:2050;pointer-events:none}.emoji-char{position:absolute;font-size:3rem;line-height:1;transform:translate(-50%,-50%);transition:none}#btn-dog-exit{display:none;margin-top:20px;position:relative;bottom:auto;left:auto;transform:none;font-size:1.5rem;padding:10px 40px;background:var(--main-pink);border:3px solid #fff}</style></head><body><audio id="bgm-title" src="bgm_title.mp3" loop></audio><audio id="bgm-stage1" src="bgm_bitter_st1.mp3" loop></audio><audio id="bgm-ex" src="bgm_bitter_ex.mp3" loop></audio><audio id="bgm-white-st1" src="bgm_white_st1.mp3" loop></audio><audio id="bgm-white-ex" src="bgm_white_ex.mp3" loop></audio><audio id="bgm-clear" src="bgm_clear.mp3" loop></audio><audio id="bgm-yajuu-a" src="bgm_yajuu_a.mp3" loop></audio><audio id="bgm-yajuu-b" src="bgm_yajuu_b.mp3" loop></audio><audio id="bgm-dog" src="bgm_dog_run.mp3" loop></audio><div id="volume-controls"><div style="display:flex;gap:10px"><span onclick="setVolume('bgm',0,true,true)" style="cursor:pointer">BGM</span><div class="vol-bar-wrapper" id="bgm-ctrl"><div class="vol-bar active" onclick="setVolume('bgm',1,true,true)"></div><div class="vol-bar active" onclick="setVolume('bgm',2,true,true)"></div><div class="vol-bar active" onclick="setVolume('bgm',3,true,true)"></div><div class="vol-bar" onclick="setVolume('bgm',4,true,true)"></div><div class="vol-bar" onclick="setVolume('bgm',5,true,true)"></div></div></div><div style="display:flex;gap:10px"><span onclick="setVolume('se',0,true,true)" style="cursor:pointer">SE</span><div class="vol-bar-wrapper" id="se-ctrl"><div class="vol-bar active" onclick="setVolume('se',1,true,true)"></div><div class="vol-bar active" onclick="setVolume('se',2,true,true)"></div><div class="vol-bar active" onclick="setVolume('se',3,true,true)"></div><div class="vol-bar" onclick="setVolume('se',4,true,true)"></div><div class="vol-bar" onclick="setVolume('se',5,true,true)"></div></div></div></div><div id="hud-left"><div id="hud-ball" class="hud-ball"></div><span style="font-size:1.5rem;color:#fff;text-shadow:2px 2px 0 #3e2723">×</span><span id="lives-val" style="font-size:2rem;color:#ff80ab;font-weight:bold;text-shadow:2px 2px 0 #3e2723">0</span></div><div id="title-screen" class="screen"><h1 style="font-size:min(3.5rem,10vw);z-index:10"><span style="color:#3e2723">BITTER</span> <span style="color:#ff80ab">&</span> <span style="color:#fff9c4">WHITE</span></h1><button class="btn" onclick="triggerStart()">はじめる</button></div><div id="pass-screen" class="screen" style="display:none"><div class="input-container"><div class="age-row">ねんれい <input type="text" id="ageInput" maxlength="6" style="width:100px"> さい</div><div class="input-row">チ <div class="heart-wrapper"><input type="text" id="passInput" maxlength="1"></div> コください💗</div><button class="btn" onclick="checkAll()">届け、このキモチ・・・！</button><p id="msg" style="color:#d81b60;margin-top:15px;font-weight:bold;min-height:1.2em"></p></div></div><div id="game-wrapper"><div id="game-container"><div id="bg-image-layer"></div><div id="yajuu-curtain"></div><div id="dog-layer"><div id="emoji-dog" class="emoji-char">🐶</div><div id="emoji-hand" class="emoji-char">✋</div></div><button id="btn-restart" class="game-btn" onclick="location.reload()">はじめから</button><button id="btn-finish" class="game-btn" onclick="location.reload()">おわり</button><div id="heart-1" class="bitter-heart normal-heart" onclick="hc(event,'heart-1')"></div><div id="heart-2" class="bitter-heart normal-heart" onclick="hc(event,'heart-2')"></div><div id="heart-large" class="bitter-heart large-heart" onclick="hc(event,'heart-large')"></div><canvas id="game-canvas"></canvas></div><button id="btn-dog-exit" class="game-btn" onclick="location.reload()">またね</button></div><script>
-const ac=new(window.AudioContext||window.webkitAudioContext),NW=1153,NH=1728,NM=150,YW=1664,YH=1216,YM=100;let bVol=0.6,sVol=0.6,cBgm=null,IW=NW,IH=NH,MH=NM,VW=IW,VH=IH+MH,ball,pad,run=false,lives=0,stg=1,blks=[],clkH=new Set(),hBlks=[],stgClr=false,pHid=false,exT=0,clrT=0,mode='black',yTrig=false,yAnim=false,gOv=false,goT=0;
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>BITTER & WHITE</title>
+<link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+
+<script>
+(function(){
+    // 画面が表示される前に、認証済みかチェックする
+    const urlParams = new URLSearchParams(window.location.search);
+    const skip = urlParams.get('skip_gate') === 'true'; 
+    const auth = localStorage.getItem('bw_gate_cleared') === 'true';
+    
+    // もし認証済みなら、警告画面を強制的に消すスタイルを埋め込む
+    if (skip || auth) {
+        document.write('<style>#gate-overlay { display: none !important; }</style>');
+    }
+})();
+</script>
+<style>
+/* --- 基本設定 --- */
+:root{--main-pink:#ff80ab;--black-choco:#3e2723;--white-choco:#fff9c4}
+body,html{margin:0;padding:0;height:100%;font-family:'Yomogi',cursive;background-color:#fce4ec;overflow:hidden;touch-action:none}
+
+/* ▼▼▼ 法的警告ゲート ▼▼▼ */
+#gate-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000000;
+    color: #ff0000;
+    display: flex; /* 基本は表示 */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    text-align: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.gate-title {
+    font-size: min(2.5rem, 8vw);
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ff0000;
+    padding-bottom: 10px;
+    letter-spacing: 2px;
+}
+.gate-subtitle {
+    font-size: min(1.2rem, 5vw);
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.contract-box {
+    width: 100%;
+    max-width: 800px;
+    height: 50vh;
+    overflow-y: auto;
+    border: 1px solid #ff0000;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    white-space: pre-wrap;
+    font-size: 1.0rem;
+    line-height: 1.5;
+    background-color: rgba(20, 0, 0, 0.8);
+    box-shadow: inset 0 0 20px #300;
+}
+.contract-box::-webkit-scrollbar { width: 10px; }
+.contract-box::-webkit-scrollbar-track { background: #300; }
+.contract-box::-webkit-scrollbar-thumb { background: #ff0000; border-radius: 5px; }
+
+.gate-input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    width: 100%;
+}
+
+input#gate-pass {
+    font-family: 'Yomogi', cursive;
+    background: #000;
+    border: 2px solid #ff0000;
+    color: #ff0000;
+    font-size: 1.5rem;
+    padding: 10px;
+    text-align: center;
+    outline: none;
+    width: min(300px, 80vw);
+    border-radius: 5px;
+}
+input#gate-pass::placeholder { color: #800000; }
+
+button.gate-btn {
+    font-family: 'Yomogi', cursive;
+    background: #ff0000;
+    color: #000;
+    border: 2px solid #ff0000;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 50px;
+    transition: all 0.2s;
+}
+button.gate-btn:hover {
+    background: #000;
+    color: #ff0000;
+    box-shadow: 0 0 15px #ff0000;
+}
+
+.gate-footer {
+    font-size: 0.9rem;
+    margin-top: 15px;
+    opacity: 0.8;
+}
+
+#gate-msg {
+    color: #ff0000;
+    height: 1.5em;
+    font-weight: bold;
+    text-shadow: 0 0 5px #f00;
+}
+
+/* --- 以下、ゲーム本体CSS --- */
+.screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;position:relative}
+.piece-title{width:16px;height:32px;border-radius:2px;position:fixed;transition:transform 3.5s cubic-bezier(0.22,1,0.36,1),opacity 3s;z-index:1000}
+.black-piece-title{background:var(--black-choco);border:1.5px solid #5d4037}
+.white-piece-title{background:var(--white-choco);border:1.5px solid #fff}
+#game-wrapper{display:none;width:100vw;height:100vh;background:#000;position:fixed;top:0;left:0;z-index:2000;flex-direction:column;align-items:center;justify-content:center}
+#game-container{position:relative;height:95vh;width:calc(95vh*1153/1878);max-width:100vw;background-color:#1a1a1a;overflow:hidden;box-shadow:0 0 40px #000;transition:height 0.5s}
+#bg-image-layer{position:absolute;top:0;left:0;width:100%;height:calc(100%*1728/1878);background-size:100% 100%;z-index:2010}
+#yajuu-curtain{position:absolute;top:0;left:0;width:100%;height:100%;background-size:100% 100%;z-index:2015;display:none;transition:clip-path 1.0s linear}
+.bitter-heart,.white-heart{position:absolute;z-index:2020;display:flex;align-items:center;justify-content:center;pointer-events:none;animation:heartBeat 1.2s infinite;cursor:pointer}
+.bitter-heart::before,.bitter-heart::after{content:"";position:absolute;top:0;width:50%;height:80%;background:var(--black-choco);border:2.5px solid #5d4037}
+.bitter-heart::before{left:50%;transform:rotate(-45deg);transform-origin:0 100%}
+.bitter-heart::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}
+.white-heart::before,.white-heart::after{content:"";position:absolute;top:0;width:50%;height:80%;background:var(--white-choco);border:2.5px solid #fff}
+.white-heart::before{left:50%;transform:rotate(-45deg);transform-origin:0 100%}
+.white-heart::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}
+.normal-heart::before,.normal-heart::after{border-radius:50px 50px 0 0}
+.large-heart::before,.large-heart::after{border-radius:400px 400px 0 0}
+.heart-active{pointer-events:auto!important}
+#game-canvas{width:100%;height:100%;display:block;position:absolute;top:0;left:0;z-index:2100;pointer-events:auto;background:transparent}
+.howawa{position:absolute;color:var(--main-pink);pointer-events:none;z-index:3000;animation:a 1.5s ease-out forwards;font-size:2rem}@keyframes a{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-100px) scale(1.5);opacity:0}}.canvas-pass{pointer-events:none!important}
+#volume-controls{position:fixed;top:20px;right:20px;z-index:3000;display:flex;flex-direction:column;gap:10px;background:rgba(255,255,255,0.8);padding:10px;border-radius:10px}
+#hud-left{position:absolute;top:20px;left:20px;z-index:3000;display:none;align-items:center;gap:10px}
+.hud-ball{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.5);box-shadow:2px 2px 5px rgba(0,0,0,0.3)}
+.vol-bar-wrapper{display:flex;align-items:flex-end;gap:4px;height:30px;cursor:pointer}
+.vol-bar{width:8px;background:#ddd;transition:background .2s}
+.vol-bar.active{background:var(--main-pink)}
+.vol-bar:nth-child(1){height:20%}.vol-bar:nth-child(2){height:40%}.vol-bar:nth-child(3){height:60%}.vol-bar:nth-child(4){height:80%}.vol-bar:nth-child(5){height:100%}
+.game-btn{display:none;position:absolute;bottom:15px;left:50%;transform:translateX(-50%);padding:8px 25px;font-family:'Yomogi',cursive;font-size:1.2rem;background:var(--main-pink);color:#fff;border:2px solid #fff;border-radius:50px;cursor:pointer;z-index:2800}
+.input-container{background:#fff;padding:30px;border-radius:20px;width:min(400px,90vw);z-index:50}
+.age-row,.input-row{margin-bottom:20px;font-size:1.8rem;color:var(--main-pink);display:flex;align-items:center;justify-content:center;gap:10px}
+input[type="text"]{font-family:'Yomogi',cursive;border:3px solid var(--main-pink);border-radius:12px;padding:5px;text-align:center;color:var(--main-pink);font-size:1.8rem}
+.heart-wrapper{position:relative;width:70px;height:65px;animation:heartBeat 1s infinite;transform:scale(0.8)}
+.heart-wrapper::before,.heart-wrapper::after{content:"";position:absolute;top:0;width:35px;height:55px;background:var(--main-pink);border-radius:35px 35px 0 0}
+.heart-wrapper::before{left:35px;transform:rotate(-45deg);transform-origin:0 100%}
+.heart-wrapper::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}
+#passInput{position:relative;width:50px;height:50px;z-index:10;border:none;background:0 0;color:#fff;font-size:2rem;text-align:center;outline:none}
+.btn{padding:12px 40px;font-size:1.5rem;font-family:'Yomogi',cursive;background:var(--main-pink);color:#fff;border:none;border-radius:50px;cursor:pointer}
+@keyframes heartBeat{0%,100%{transform:scale(0.8)}20%{transform:scale(1.0)}}
+#dog-layer{display:none;position:absolute;top:0;left:0;width:100%;height:100%;z-index:2050;pointer-events:none}
+.emoji-char{position:absolute;font-size:3rem;line-height:1;transform:translate(-50%,-50%);transition:none}
+#btn-dog-exit{display:none;margin-top:20px;position:relative;bottom:auto;left:auto;transform:none;font-size:1.5rem;padding:10px 40px;background:var(--main-pink);border:3px solid #fff}
+</style>
+</head>
+<body>
+
+<div id="gate-overlay">
+    <div class="gate-title">WARNING: RESTRICTED AREA</div>
+    <div class="gate-subtitle">CLASSIFIED CONTENT / ADULT CONTENT</div>
+    
+    <div class="contract-box">
+NON-DISCLOSURE & LIABILITY AGREEMENT
+Access to this system is strictly limited to authorized personnel who have received the Access Key directly from the Official Restricted Account.
+By entering the Access Key, you unconditionally agree to the following:
+
+AUTHORIZED ACCESS ONLY: You certify that you obtained the Access Key through the legitimate, private distribution channel. Any access via leaked keys, brute-force, or unauthorized sharing is a violation of the Computer Fraud and Abuse Act and relevant international laws.
+TRANSFER OF LIABILITY: If you access this content without explicit authorization, you hereby assume full legal liability for any consequences, legal actions, or damages. The developer/owner bears no responsibility for access by unauthorized parties.
+NON-DISCLOSURE AGREEMENT (NDA): You agree to keep all content, mechanics, and the Access Key strictly confidential. Public dissemination is prohibited.
+AGE VERIFICATION: You confirm that you are of legal age to view adult-oriented material in your jurisdiction.
+ABSOLUTE IMMUNITY & INDEMNIFICATION: Due to the strictly confidential nature of this access, you agree that the Developer is forever exempt from any liability. You agree to indemnify and hold the Developer harmless against any claims arising from your access. You explicitly waive your right to pursue any legal recourse against the Developer.
+    </div>
+    
+    <div class="gate-input-area">
+        <input type="password" id="gate-pass" placeholder="ENTER ACCESS KEY" maxlength="8">
+        <button class="gate-btn" onclick="tryGateUnlock()">I ACCEPT & AUTHENTICATE</button>
+        <div class="gate-footer">ENTRY OF THE KEY CONSTITUTES A BINDING DIGITAL SIGNATURE TO THESE TERMS.</div>
+        <div id="gate-msg"></div>
+    </div>
+</div>
+<audio id="bgm-title" src="bgm_title.mp3" loop></audio>
+<audio id="bgm-stage1" src="bgm_bitter_st1.mp3" loop></audio>
+<audio id="bgm-ex" src="bgm_bitter_ex.mp3" loop></audio>
+<audio id="bgm-white-st1" src="bgm_white_st1.mp3" loop></audio>
+<audio id="bgm-white-ex" src="bgm_white_ex.mp3" loop></audio>
+<audio id="bgm-clear" src="bgm_clear.mp3" loop></audio>
+<audio id="bgm-yajuu-a" src="bgm_yajuu_a.mp3" loop></audio>
+<audio id="bgm-yajuu-b" src="bgm_yajuu_b.mp3" loop></audio>
+<audio id="bgm-dog" src="bgm_dog_run.mp3" loop></audio>
+
+<div id="volume-controls">
+    <div style="display:flex;gap:10px"><span onclick="setVolume('bgm',0,true,true)" style="cursor:pointer">BGM</span>
+        <div class="vol-bar-wrapper" id="bgm-ctrl"><div class="vol-bar active" onclick="setVolume('bgm',1,true,true)"></div><div class="vol-bar active" onclick="setVolume('bgm',2,true,true)"></div><div class="vol-bar active" onclick="setVolume('bgm',3,true,true)"></div><div class="vol-bar" onclick="setVolume('bgm',4,true,true)"></div><div class="vol-bar" onclick="setVolume('bgm',5,true,true)"></div></div>
+    </div>
+    <div style="display:flex;gap:10px"><span onclick="setVolume('se',0,true,true)" style="cursor:pointer">SE</span>
+        <div class="vol-bar-wrapper" id="se-ctrl"><div class="vol-bar active" onclick="setVolume('se',1,true,true)"></div><div class="vol-bar active" onclick="setVolume('se',2,true,true)"></div><div class="vol-bar active" onclick="setVolume('se',3,true,true)"></div><div class="vol-bar" onclick="setVolume('se',4,true,true)"></div><div class="vol-bar" onclick="setVolume('se',5,true,true)"></div></div>
+    </div>
+</div>
+
+<div id="hud-left">
+    <div id="hud-ball" class="hud-ball"></div>
+    <span style="font-size:1.5rem;color:#fff;text-shadow:2px 2px 0 #3e2723">×</span>
+    <span id="lives-val" style="font-size:2rem;color:#ff80ab;font-weight:bold;text-shadow:2px 2px 0 #3e2723">0</span>
+</div>
+
+<div id="title-screen" class="screen">
+    <h1 style="font-size:min(3.5rem,10vw);z-index:10"><span style="color:#3e2723">BITTER</span> <span style="color:#ff80ab">&</span> <span style="color:#fff9c4">WHITE</span></h1>
+    <button class="btn" onclick="triggerStart()">はじめる</button>
+</div>
+
+<div id="pass-screen" class="screen" style="display:none">
+    <div class="input-container">
+        <div class="age-row">ねんれい <input type="text" id="ageInput" maxlength="6" style="width:100px"> さい</div>
+        <div class="input-row">チ <div class="heart-wrapper"><input type="text" id="passInput" maxlength="1"></div> コください💗</div>
+        <button class="btn" onclick="checkAll()">届け、このキモチ・・・！</button>
+        <p id="msg" style="color:#d81b60;margin-top:15px;font-weight:bold;min-height:1.2em"></p>
+    </div>
+</div>
+
+<div id="game-wrapper">
+    <div id="game-container">
+        <div id="bg-image-layer"></div>
+        <div id="yajuu-curtain"></div>
+        <div id="dog-layer">
+            <div id="emoji-dog" class="emoji-char">🐶</div>
+            <div id="emoji-hand" class="emoji-char">✋</div>
+        </div>
+        <button id="btn-restart" class="game-btn" onclick="reloadGame()">はじめから</button>
+        <button id="btn-finish" class="game-btn" onclick="reloadGame()">おわり</button>
+        
+        <div id="heart-1" class="bitter-heart normal-heart" onclick="hc(event,'heart-1')"></div>
+        <div id="heart-2" class="bitter-heart normal-heart" onclick="hc(event,'heart-2')"></div>
+        <div id="heart-large" class="bitter-heart large-heart" onclick="hc(event,'heart-large')"></div>
+        <canvas id="game-canvas"></canvas>
+    </div>
+    <button id="btn-dog-exit" class="game-btn" onclick="reloadGame()">またね</button>
+</div>
+
+<script>
+// --- グローバル変数 ---
+const ac=new(window.AudioContext||window.webkitAudioContext),NW=1153,NH=1728,NM=150,YW=1664,YH=1216,YM=100;
+let bVol=0.6,sVol=0.6,cBgm=null,IW=NW,IH=NH,MH=NM,VW=IW,VH=IH+MH,ball,pad,run=false,lives=0,stg=1,blks=[],clkH=new Set(),hBlks=[],stgClr=false,pHid=false,exT=0,clrT=0,mode='black',yTrig=false,yAnim=false,gOv=false,goT=0;
 let dog={x:0,y:0,state:'idle',tx:0,ty:0},hand={x:0,y:0};
 const fps=60,fpsInterval=1000/fps;let then=Date.now(),elapsed;
 const cv=document.getElementById('game-canvas'),ctx=cv.getContext('2d');
+
+// --- ゲート制御システム (鉄壁ガード) ---
+
+// 1. ページ読み込み完了時の処理
+window.onload = () => {
+    // 既にHead内のスクリプトで認証チェックは終わっているが、
+    // ここで改めてゲームを開始すべきか判断する。
+    const urlParams = new URLSearchParams(window.location.search);
+    const skip = urlParams.get('skip_gate') === 'true'; 
+    const auth = localStorage.getItem('bw_gate_cleared') === 'true';
+
+    if (skip || auth) {
+        // スタイルで隠しただけなので、改めてdisplay:noneを適用し、ゲームを開始する
+        document.getElementById('gate-overlay').style.display = 'none';
+        initGameSystem(); 
+    }
+    // 未認証の場合は何もしない（ゲートはCSSで表示されたまま）
+};
+
+// 2. ゲート認証処理
+function tryGateUnlock() {
+    const input = document.getElementById('gate-pass');
+    const msg = document.getElementById('gate-msg');
+    
+    if (input.value === '20260214') {
+        localStorage.setItem('bw_gate_cleared', 'true'); // 認証を保存
+        document.getElementById('gate-overlay').style.display = 'none';
+        initGameSystem(); // ゲームシステム起動
+    } else {
+        msg.innerText = "ACCESS DENIED";
+        input.value = "";
+    }
+}
+
+// 3. ゲームリロード処理 (合言葉をつけてリロード)
+function reloadGame() {
+    const url = window.location.href.split('?')[0];
+    window.location.href = url + "?skip_gate=true";
+}
+
+// 4. ゲームシステム起動 (BGMなどもここで初めて有効化)
+function initGameSystem() {
+    loadVol();
+    createChoco();
+    swBgm('bgm-title'); // ここでタイトルBGM再生開始
+
+    // 画面クリックでAudioContextを再開する処理もここで初めて登録
+    const resumeAudio = () => {
+        if(ac.state==='suspended')ac.resume();
+        if(cBgm&&cBgm.paused)cBgm.play();
+    };
+    document.addEventListener('click', resumeAudio, {once:true});
+    document.addEventListener('touchstart', resumeAudio, {once:true});
+}
+
+// --- 以下、既存のゲームロジック ---
+
 function loadVol(){const b=localStorage.getItem('bw_bgm_vol'),s=localStorage.getItem('bw_se_vol');if(b)setVolume('bgm',parseInt(b),false,false);if(s)setVolume('se',parseInt(s),false,false)}
 function setVolume(t,l,p=true,toggle=false){
   const k='bw_'+t+'_vol';const c=parseInt(localStorage.getItem(k)||3);if(toggle&&l===1&&c===1)l=0;
   let v=l/5.0;if(t==='bgm'){bVol=v;if(cBgm)cBgm.volume=v;localStorage.setItem(k,l)}else{sVol=v;if(l>0&&p)pt(880,0.1);localStorage.setItem(k,l)}document.querySelectorAll(`#${t}-ctrl .vol-bar`).forEach((b,i)=>b.classList.toggle('active',i<l))}
 function swBgm(id){if(cBgm){cBgm.pause();cBgm.currentTime=0}if(!id)return;const n=document.getElementById(id);if(n){n.volume=bVol;n.play().catch(()=>{});cBgm=n}}
-document.addEventListener('click',()=>{if(ac.state==='suspended')ac.resume();if(cBgm&&cBgm.paused)cBgm.play()},{once:true});
-document.addEventListener('touchstart',()=>{if(ac.state==='suspended')ac.resume();if(cBgm&&cBgm.paused)cBgm.play()},{once:true});
+
 function pt(f,d=0.2){if(sVol<=0.01)return;if(ac.state==='suspended')ac.resume();const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(f,ac.currentTime);g.gain.setValueAtTime(0.3*sVol,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+d);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}
-window.onload=()=>{loadVol();createChoco();swBgm('bgm-title')};
+
 function createChoco(){const cx=innerWidth/2,cy=innerHeight/2,off=innerWidth>600?250:150;for(let r=0;r<4;r++)for(let c=0;c<3;c++){let w=document.createElement('div'),b=document.createElement('div');w.className='piece-title white-piece-title';b.className='piece-title black-piece-title';w.style.left=(cx-off-50+c*17)+'px';w.style.top=(cy-65+r*33)+'px';b.style.left=(cx+off+c*17)+'px';b.style.top=(cy-65+r*33)+'px';document.body.append(w,b)}}
 function triggerStart(){pt(523.3);document.querySelectorAll('.piece-title').forEach(p=>{const rx=(Math.random()-0.5)*800,jy=-250-Math.random()*200;p.style.transform=`translate(${rx*0.2}px,${jy}px) rotate(${(Math.random()-0.5)*150}deg)`;setTimeout(()=>{p.style.transform=`translate(${rx}px,${innerHeight+1000}px)`;p.style.opacity='0'},250)});setTimeout(()=>{document.getElementById('title-screen').style.display='none';document.getElementById('pass-screen').style.display='flex'},1000)}
 function checkAll(){const ar=document.getElementById('ageInput').value.trim(),pw=document.getElementById('passInput').value.trim(),age=parseInt(ar.replace(/[０-９]/g,s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0)));if(isNaN(age)){document.getElementById('msg').innerText="ねんれいを入力してね";return}lives=age;
 if(age<=17)init('dog');else if(age>=121&&age!=114514)document.getElementById('msg').innerText="年金でチョコ買えよ老いぼれ";else if(age==114514)init('yajuu');else if((pw=='ン'||pw=='ﾝ')&&age>=18&&age<=120)init('white');else if(pw=='ョ'||pw=='ｮ')init('black');else document.getElementById('msg').innerText="そんなキモチじゃ届かないよ・・・？"}
 function setHS(id,x,y,w,h){const e=document.getElementById(id);e.style.left=(x/VW*100)+'%';e.style.top=(y/VH*100)+'%';e.style.width=(w/VW*100)+'%';e.style.height=(h/VH*100)+'%';e.style.display='flex'}
 function drawStaticBlocks(m){
-    // Immediate render to prevent subliminal flash
     ctx.clearRect(0,0,VW,VH);
     if(m==='dog') return;
     ctx.fillStyle=mode==='white'?'#ffffff':'#111';ctx.fillRect(0,IH,VW,MH);
@@ -61,7 +376,7 @@ document.getElementById('hud-ball').style.backgroundColor=bc;
 if(stg===2&&exT>0){ctx.fillStyle=`rgba(255,255,255,${Math.min(1,exT/60)})`;ctx.font="bold 120px 'Yomogi'";ctx.textAlign="center";ctx.fillText("EX STAGE",VW/2,VH/2);ctx.textAlign="start";exT--}
 if(stgClr&&clrT>0){ctx.fillStyle=`rgba(255,255,255,${Math.min(1,clrT/60)})`;ctx.font="bold 120px 'Yomogi'";ctx.textAlign="center";ctx.fillText("STAGE CLEAR",VW/2,VH/2);ctx.textAlign="start";clrT--}
 if(stg===1&&!stgClr){let blc=mode==='white'?'#fff9c4':mode==='yajuu'?'#f06292':'#3e2723',bld=mode==='white'?'#fff':mode==='yajuu'?'#ad1457':'#5d4037';blks.forEach(b=>{if(b.alive){ctx.fillStyle=blc;ctx.fillRect(b.x,b.y,b.w,b.h);ctx.strokeStyle=bld;ctx.lineWidth=2;ctx.strokeRect(b.x,b.y,b.w,b.h)}})}
-if(gOv){ctx.fillStyle="#ff80ab";ctx.font="bold 100px 'Yomogi'";ctx.textAlign="center";ctx.fillText("GAME OVER",VW/2,VH/2);ctx.textAlign="start";goT--;if(goT<=0)location.reload();}
+if(gOv){ctx.fillStyle="#ff80ab";ctx.font="bold 100px 'Yomogi'";ctx.textAlign="center";ctx.fillText("GAME OVER",VW/2,VH/2);ctx.textAlign="start";goT--;if(goT<=0)reloadGame();}
 else if(run||(!run&&!yAnim)){if(!pHid){ctx.fillStyle=pc;ctx.beginPath();ctx.roundRect(pad.x,pad.y,pad.w,pad.h,15);ctx.fill()}if(ball.active||(!stgClr&&!ball.active&&!pHid)){ctx.fillStyle=bc;ctx.beginPath();ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);ctx.fill()}}
 if(run&&!gOv){if(ball.active){const st=4;let sx=ball.dx/st,sy=ball.dy/st;for(let i=0;i<st;i++){ball.x+=sx;ball.y+=sy;if(ball.x<ball.r){ball.x=ball.r;ball.dx=Math.abs(ball.dx);sx=ball.dx/st}if(ball.x>VW-ball.r){ball.x=VW-ball.r;ball.dx=-Math.abs(ball.dx);sx=ball.dx/st}if(ball.y<ball.r){ball.y=ball.r;ball.dy=Math.abs(ball.dy);sy=ball.dy/st}
 if(!pHid&&ball.dy>0&&ball.y+ball.r>=pad.y&&ball.y-ball.r<=pad.y+pad.h&&ball.x+ball.r>=pad.x&&ball.x-ball.r<=pad.x+pad.w){ball.dy=-Math.abs(ball.dy);ball.y=pad.y-ball.r-2;sy=ball.dy/st;pt(660,0.1)}
