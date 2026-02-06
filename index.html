@@ -1,41 +1,564 @@
-<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"><title>BITTER & WHITE</title><link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet"><style>:root{--main-pink:#ff80ab;--black-choco:#3e2723;--white-choco:#fff9c4}body,html{margin:0;padding:0;height:100%;font-family:'Yomogi',cursive;background-color:#fce4ec;overflow:hidden;touch-action:none}.screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;position:relative}.piece-title{width:16px;height:32px;border-radius:2px;position:fixed;transition:transform 3.5s cubic-bezier(0.22,1,0.36,1),opacity 3s;z-index:1000}.black-piece-title{background:var(--black-choco);border:1.5px solid #5d4037}.white-piece-title{background:var(--white-choco);border:1.5px solid #fff}#game-wrapper{display:none;width:100vw;height:100vh;background:#000;position:fixed;top:0;left:0;z-index:2000;flex-direction:column;align-items:center;justify-content:center}#game-container{position:relative;height:95vh;width:calc(95vh*1153/1878);max-width:100vw;background-color:#1a1a1a;overflow:hidden;box-shadow:0 0 40px #000;transition:height 0.5s}#bg-image-layer{position:absolute;top:0;left:0;width:100%;height:calc(100%*1728/1878);background-size:100% 100%;z-index:2010}#yajuu-curtain{position:absolute;top:0;left:0;width:100%;height:100%;background-size:100% 100%;z-index:2015;display:none;transition:clip-path 1.0s linear}.bitter-heart,.white-heart{position:absolute;z-index:2020;display:flex;align-items:center;justify-content:center;pointer-events:none;animation:heartBeat 1.2s infinite;cursor:pointer}.bitter-heart::before,.bitter-heart::after{content:"";position:absolute;top:0;width:50%;height:80%;background:var(--black-choco);border:2.5px solid #5d4037}.bitter-heart::before{left:50%;transform:rotate(-45deg);transform-origin:0 100%}.bitter-heart::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}.white-heart::before,.white-heart::after{content:"";position:absolute;top:0;width:50%;height:80%;background:var(--white-choco);border:2.5px solid #fff}.white-heart::before{left:50%;transform:rotate(-45deg);transform-origin:0 100%}.white-heart::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}.normal-heart::before,.normal-heart::after{border-radius:50px 50px 0 0}.large-heart::before,.large-heart::after{border-radius:400px 400px 0 0}.heart-active{pointer-events:auto!important}#game-canvas{width:100%;height:100%;display:block;position:absolute;top:0;left:0;z-index:2100;pointer-events:auto;background:transparent}.howawa{position:absolute;color:var(--main-pink);pointer-events:none;z-index:3000;animation:a 1.5s ease-out forwards;font-size:2rem}@keyframes a{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-100px) scale(1.5);opacity:0}}.canvas-pass{pointer-events:none!important}#volume-controls{position:fixed;top:20px;right:20px;z-index:3000;display:flex;flex-direction:column;gap:10px;background:rgba(255,255,255,0.8);padding:10px;border-radius:10px}#hud-left{position:absolute;top:20px;left:20px;z-index:3000;display:none;align-items:center;gap:10px}.hud-ball{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.5);box-shadow:2px 2px 5px rgba(0,0,0,0.3)}.vol-bar-wrapper{display:flex;align-items:flex-end;gap:4px;height:30px;cursor:pointer}.vol-bar{width:8px;background:#ddd;transition:background .2s}.vol-bar.active{background:var(--main-pink)}.vol-bar:nth-child(1){height:20%}.vol-bar:nth-child(2){height:40%}.vol-bar:nth-child(3){height:60%}.vol-bar:nth-child(4){height:80%}.vol-bar:nth-child(5){height:100%}.game-btn{display:none;position:absolute;bottom:15px;left:50%;transform:translateX(-50%);padding:8px 25px;font-family:'Yomogi',cursive;font-size:1.2rem;background:var(--main-pink);color:#fff;border:2px solid #fff;border-radius:50px;cursor:pointer;z-index:2800}.input-container{background:#fff;padding:30px;border-radius:20px;width:min(400px,90vw);z-index:50}.age-row,.input-row{margin-bottom:20px;font-size:1.8rem;color:var(--main-pink);display:flex;align-items:center;justify-content:center;gap:10px}input[type="text"]{font-family:'Yomogi',cursive;border:3px solid var(--main-pink);border-radius:12px;padding:5px;text-align:center;color:var(--main-pink);font-size:1.8rem}.heart-wrapper{position:relative;width:70px;height:65px;animation:heartBeat 1s infinite;transform:scale(0.8)}.heart-wrapper::before,.heart-wrapper::after{content:"";position:absolute;top:0;width:35px;height:55px;background:var(--main-pink);border-radius:35px 35px 0 0}.heart-wrapper::before{left:35px;transform:rotate(-45deg);transform-origin:0 100%}.heart-wrapper::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}#passInput{position:relative;width:50px;height:50px;z-index:10;border:none;background:0 0;color:#fff;font-size:2rem;text-align:center;outline:none}.btn{padding:12px 40px;font-size:1.5rem;font-family:'Yomogi',cursive;background:var(--main-pink);color:#fff;border:none;border-radius:50px;cursor:pointer}@keyframes heartBeat{0%,100%{transform:scale(0.8)}20%{transform:scale(1.0)}}#dog-layer{display:none;position:absolute;top:0;left:0;width:100%;height:100%;z-index:2050;pointer-events:none}.emoji-char{position:absolute;font-size:3rem;line-height:1;transform:translate(-50%,-50%);transition:none}#btn-dog-exit{display:none;margin-top:20px;position:relative;bottom:auto;left:auto;transform:none;font-size:1.5rem;padding:10px 40px;background:var(--main-pink);border:3px solid #fff}</style></head><body><audio id="bgm-title" src="bgm_title.mp3" loop></audio><audio id="bgm-stage1" src="bgm_bitter_st1.mp3" loop></audio><audio id="bgm-ex" src="bgm_bitter_ex.mp3" loop></audio><audio id="bgm-white-st1" src="bgm_white_st1.mp3" loop></audio><audio id="bgm-white-ex" src="bgm_white_ex.mp3" loop></audio><audio id="bgm-clear" src="bgm_clear.mp3" loop></audio><audio id="bgm-yajuu-a" src="bgm_yajuu_a.mp3" loop></audio><audio id="bgm-yajuu-b" src="bgm_yajuu_b.mp3" loop></audio><audio id="bgm-dog" src="bgm_dog_run.mp3" loop></audio><div id="volume-controls"><div style="display:flex;gap:10px"><span onclick="setVolume('bgm',0,true,true)" style="cursor:pointer">BGM</span><div class="vol-bar-wrapper" id="bgm-ctrl"><div class="vol-bar active" onclick="setVolume('bgm',1,true,true)"></div><div class="vol-bar active" onclick="setVolume('bgm',2,true,true)"></div><div class="vol-bar active" onclick="setVolume('bgm',3,true,true)"></div><div class="vol-bar" onclick="setVolume('bgm',4,true,true)"></div><div class="vol-bar" onclick="setVolume('bgm',5,true,true)"></div></div></div><div style="display:flex;gap:10px"><span onclick="setVolume('se',0,true,true)" style="cursor:pointer">SE</span><div class="vol-bar-wrapper" id="se-ctrl"><div class="vol-bar active" onclick="setVolume('se',1,true,true)"></div><div class="vol-bar active" onclick="setVolume('se',2,true,true)"></div><div class="vol-bar active" onclick="setVolume('se',3,true,true)"></div><div class="vol-bar" onclick="setVolume('se',4,true,true)"></div><div class="vol-bar" onclick="setVolume('se',5,true,true)"></div></div></div></div><div id="hud-left"><div id="hud-ball" class="hud-ball"></div><span style="font-size:1.5rem;color:#fff;text-shadow:2px 2px 0 #3e2723">×</span><span id="lives-val" style="font-size:2rem;color:#ff80ab;font-weight:bold;text-shadow:2px 2px 0 #3e2723">0</span></div><div id="title-screen" class="screen"><h1 style="font-size:min(3.5rem,10vw);z-index:10"><span style="color:#3e2723">BITTER</span> <span style="color:#ff80ab">&</span> <span style="color:#fff9c4">WHITE</span></h1><button class="btn" onclick="triggerStart()">はじめる</button></div><div id="pass-screen" class="screen" style="display:none"><div class="input-container"><div class="age-row">ねんれい <input type="text" id="ageInput" maxlength="6" style="width:100px"> さい</div><div class="input-row">チ <div class="heart-wrapper"><input type="text" id="passInput" maxlength="1"></div> コください💗</div><button class="btn" onclick="checkAll()">届け、このキモチ・・・！</button><p id="msg" style="color:#d81b60;margin-top:15px;font-weight:bold;min-height:1.2em"></p></div></div><div id="game-wrapper"><div id="game-container"><div id="bg-image-layer"></div><div id="yajuu-curtain"></div><div id="dog-layer"><div id="emoji-dog" class="emoji-char">🐶</div><div id="emoji-hand" class="emoji-char">✋</div></div><button id="btn-restart" class="game-btn" onclick="location.reload()">はじめから</button><button id="btn-finish" class="game-btn" onclick="location.reload()">おわり</button><div id="heart-1" class="bitter-heart normal-heart" onclick="hc(event,'heart-1')"></div><div id="heart-2" class="bitter-heart normal-heart" onclick="hc(event,'heart-2')"></div><div id="heart-large" class="bitter-heart large-heart" onclick="hc(event,'heart-large')"></div><canvas id="game-canvas"></canvas></div><button id="btn-dog-exit" class="game-btn" onclick="location.reload()">またね</button></div><script>
-const ac=new(window.AudioContext||window.webkitAudioContext),NW=1153,NH=1728,NM=150,YW=1664,YH=1216,YM=100;let bVol=0.6,sVol=0.6,cBgm=null,IW=NW,IH=NH,MH=NM,VW=IW,VH=IH+MH,ball,pad,run=false,lives=0,stg=1,blks=[],clkH=new Set(),hBlks=[],stgClr=false,pHid=false,exT=0,clrT=0,mode='black',yTrig=false,yAnim=false,gOv=false,goT=0;
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>BITTER & WHITE</title>
+<link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+
+<script>
+(function(){
+    // 画面が表示される前に、認証済みかチェックする
+    const urlParams = new URLSearchParams(window.location.search);
+    const skip = urlParams.get('skip_gate') === 'true'; 
+    const auth = localStorage.getItem('bw_gate_cleared') === 'true';
+    if (skip || auth) {
+        document.write('<style>#gate-overlay { display: none !important; }</style>');
+    }
+})();
+</script>
+<style>
+/* --- 基本設定 --- */
+:root{--main-pink:#ff80ab;--black-choco:#3e2723;--white-choco:#fff9c4}
+body,html{margin:0;padding:0;height:100%;font-family:'Yomogi',cursive;background-color:#fce4ec;overflow:hidden;touch-action:none}
+
+/* ▼▼▼ 法的警告ゲート ▼▼▼ */
+#gate-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background-color: #000000; color: #ff0000;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 9999; text-align: center; padding: 20px; box-sizing: border-box;
+}
+.gate-title { font-size: min(2.5rem, 8vw); font-weight: bold; margin-bottom: 10px; border-bottom: 2px solid #ff0000; padding-bottom: 10px; letter-spacing: 2px; }
+.gate-subtitle { font-size: min(1.2rem, 5vw); margin-bottom: 20px; font-weight: bold; }
+.contract-box {
+    width: 100%; max-width: 800px; height: 50vh; overflow-y: auto;
+    border: 1px solid #ff0000; padding: 20px; margin-bottom: 20px;
+    text-align: left; white-space: pre-wrap; font-size: 1.0rem; line-height: 1.5;
+    background-color: rgba(20, 0, 0, 0.8); box-shadow: inset 0 0 20px #300;
+}
+.contract-box::-webkit-scrollbar { width: 10px; }
+.contract-box::-webkit-scrollbar-track { background: #300; }
+.contract-box::-webkit-scrollbar-thumb { background: #ff0000; border-radius: 5px; }
+.gate-input-area { display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%; }
+input#gate-pass {
+    font-family: 'Yomogi', cursive; background: #000; border: 2px solid #ff0000; color: #ff0000;
+    font-size: 1.5rem; padding: 10px; text-align: center; outline: none; width: min(300px, 80vw); border-radius: 5px;
+}
+input#gate-pass::placeholder { color: #800000; }
+button.gate-btn {
+    font-family: 'Yomogi', cursive; background: #ff0000; color: #000; border: 2px solid #ff0000;
+    padding: 12px 30px; font-size: 1.2rem; cursor: pointer; font-weight: bold; border-radius: 50px; transition: all 0.2s;
+}
+button.gate-btn:hover { background: #000; color: #ff0000; box-shadow: 0 0 15px #ff0000; }
+.gate-footer { font-size: 0.9rem; margin-top: 15px; opacity: 0.8; }
+#gate-msg { color: #ff0000; height: 1.5em; font-weight: bold; text-shadow: 0 0 5px #f00; }
+
+/* --- スターシステム --- */
+#star-container {
+    position: absolute; top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 20; pointer-events: none; overflow: hidden;
+}
+.star-badge {
+    position: absolute; font-size: min(3rem, 8vw); color: #ffd700; text-shadow: 0 0 5px #ff8f00; opacity: 0;
+    animation: starPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.star-twinkle { animation: starPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, twinkle 3s infinite alternate; }
+@keyframes twinkle {
+    0% { transform: scale(1) rotate(0deg); opacity: 0.8; text-shadow: 0 0 5px #ff8f00; }
+    100% { transform: scale(1.1) rotate(5deg); opacity: 1; text-shadow: 0 0 15px #ffff00; }
+}
+.star-gaming {
+    font-size: min(3.5rem, 9vw);
+    animation: starPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, rainbow 0.3s linear infinite;
+}
+@keyframes rainbow {
+    0% { filter: hue-rotate(0deg); transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.2) rotate(-5deg); } 
+    100% { filter: hue-rotate(360deg); transform: scale(1) rotate(0deg); }
+}
+@keyframes starPop { from { transform: scale(0) rotate(-180deg); opacity: 0; } to { transform: scale(1) rotate(0deg); opacity: 1; } }
+
+/* --- ギャラリーモード --- */
+#gallery-btn {
+    display: none; /* 初期非表示 */
+    margin-top: 20px;
+    background: #3e2723; color: #ffd700; border: 2px solid #ffd700;
+}
+#gallery-layer {
+    display: none;
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.95); z-index: 5000;
+    flex-direction: column; align-items: center; justify-content: center;
+}
+#gallery-img-container {
+    width: 90vw; height: 60vh;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+}
+#gallery-img {
+    max-width: 100%; max-height: 100%;
+    border: 5px solid #fff; box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    transition: opacity 0.3s;
+}
+#gallery-controls { display: flex; gap: 20px; align-items: center; }
+.gal-btn {
+    background: transparent; border: 2px solid #fff; color: #fff;
+    font-family: 'Yomogi', cursive; font-size: 1.5rem; padding: 10px 20px;
+    border-radius: 30px; cursor: pointer;
+}
+.gal-btn:hover { background: #fff; color: #000; }
+#gallery-caption { color: #fff; font-size: 1.5rem; margin-bottom: 10px; }
+
+/* --- チェコモード --- */
+#czech-layer {
+    display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #222; z-index: 2200;
+    flex-direction: column; align-items: center; justify-content: center; overflow: hidden;
+}
+.flag-container {
+    line-height: 1.0; font-size: 16px; white-space: pre; font-family: "MS Gothic", monospace; 
+    font-weight: bold; user-select: none; cursor: crosshair; border: 1px solid #444;
+}
+.w { color: #FFFFFF; } .r { color: #D7141A; } .b { color: #11457E; } 
+#czech-timer {
+    position: absolute; top: 10px; left: 15px; font-size: 2rem; color: #fff;
+    font-family: 'Yomogi', cursive; z-index: 2300; text-shadow: 2px 2px 0 #000;
+}
+#czech-msg {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    font-size: min(4rem, 10vw); font-weight: bold; color: #fff;
+    text-shadow: 0 0 10px #ff80ab, 3px 3px 0 #000; z-index: 2400;
+    pointer-events: none; display: none; white-space: nowrap; opacity: 1; transition: opacity 1s;
+}
+#btn-czech-exit {
+    display: none; position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%);
+    font-size: 1.5rem; padding: 10px 40px; background: var(--main-pink); border: 3px solid #fff; z-index: 2500;
+}
+
+/* --- ゲーム本体CSS --- */
+.screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;position:relative}
+.piece-title{width:16px;height:32px;border-radius:2px;position:fixed;transition:transform 3.5s cubic-bezier(0.22,1,0.36,1),opacity 3s;z-index:1000;pointer-events:none;}
+.black-piece-title{background:var(--black-choco);border:1.5px solid #5d4037}
+.white-piece-title{background:var(--white-choco);border:1.5px solid #fff}
+#game-wrapper{display:none;width:100vw;height:100vh;background:#000;position:fixed;top:0;left:0;z-index:2000;flex-direction:column;align-items:center;justify-content:center}
+#game-container{position:relative;height:95vh;width:calc(95vh*1153/1878);max-width:100vw;background-color:#1a1a1a;overflow:hidden;box-shadow:0 0 40px #000;transition:height 0.5s}
+#bg-image-layer{position:absolute;top:0;left:0;width:100%;height:calc(100%*1728/1878);background-size:100% 100%;z-index:2010}
+#yajuu-curtain{position:absolute;top:0;left:0;width:100%;height:100%;background-size:100% 100%;z-index:2015;display:none;transition:clip-path 1.0s linear}
+.bitter-heart,.white-heart{position:absolute;z-index:2020;display:flex;align-items:center;justify-content:center;pointer-events:none;animation:heartBeat 1.2s infinite;cursor:pointer}
+.bitter-heart::before,.bitter-heart::after{content:"";position:absolute;top:0;width:50%;height:80%;background:var(--black-choco);border:2.5px solid #5d4037}
+.bitter-heart::before{left:50%;transform:rotate(-45deg);transform-origin:0 100%}
+.bitter-heart::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}
+.white-heart::before,.white-heart::after{content:"";position:absolute;top:0;width:50%;height:80%;background:var(--white-choco);border:2.5px solid #fff}
+.white-heart::before{left:50%;transform:rotate(-45deg);transform-origin:0 100%}
+.white-heart::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}
+.normal-heart::before,.normal-heart::after{border-radius:50px 50px 0 0}
+.large-heart::before,.large-heart::after{border-radius:400px 400px 0 0}
+.heart-active{pointer-events:auto!important}
+#game-canvas{width:100%;height:100%;display:block;position:absolute;top:0;left:0;z-index:2100;pointer-events:auto;background:transparent}
+.howawa{position:absolute;color:var(--main-pink);pointer-events:none;z-index:3000;animation:a 1.5s ease-out forwards;font-size:2rem}@keyframes a{0%{transform:translateY(0) scale(1);opacity:1}100%{transform:translateY(-100px) scale(1.5);opacity:0}}.canvas-pass{pointer-events:none!important}
+#volume-controls{position:fixed;top:20px;right:20px;z-index:3000;display:flex;flex-direction:column;gap:10px;background:rgba(255,255,255,0.8);padding:10px;border-radius:10px}
+#hud-left{position:absolute;top:20px;left:20px;z-index:3000;display:none;align-items:center;gap:10px}
+.hud-ball{width:24px;height:24px;border-radius:50%;border:2px solid rgba(255,255,255,0.5);box-shadow:2px 2px 5px rgba(0,0,0,0.3)}
+.vol-bar-wrapper{display:flex;align-items:flex-end;gap:4px;height:30px;cursor:pointer}
+.vol-bar{width:8px;background:#ddd;transition:background .2s}
+.vol-bar.active{background:var(--main-pink)}
+.vol-bar:nth-child(1){height:20%}.vol-bar:nth-child(2){height:40%}.vol-bar:nth-child(3){height:60%}.vol-bar:nth-child(4){height:80%}.vol-bar:nth-child(5){height:100%}
+.game-btn{display:none;position:absolute;bottom:15px;left:50%;transform:translateX(-50%);padding:8px 25px;font-family:'Yomogi',cursive;font-size:1.2rem;background:var(--main-pink);color:#fff;border:2px solid #fff;border-radius:50px;cursor:pointer;z-index:2800}
+.input-container{background:#fff;padding:30px;border-radius:20px;width:min(400px,90vw);z-index:50}
+.age-row,.input-row{margin-bottom:20px;font-size:1.8rem;color:var(--main-pink);display:flex;align-items:center;justify-content:center;gap:10px}
+input[type="text"]{font-family:'Yomogi',cursive;border:3px solid var(--main-pink);border-radius:12px;padding:5px;text-align:center;color:var(--main-pink);font-size:1.8rem}
+.heart-wrapper{position:relative;width:70px;height:65px;animation:heartBeat 1s infinite;transform:scale(0.8)}
+.heart-wrapper::before,.heart-wrapper::after{content:"";position:absolute;top:0;width:35px;height:55px;background:var(--main-pink);border-radius:35px 35px 0 0}
+.heart-wrapper::before{left:35px;transform:rotate(-45deg);transform-origin:0 100%}
+.heart-wrapper::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}
+#passInput{position:relative;width:50px;height:50px;z-index:10;border:none;background:0 0;color:#fff;font-size:2rem;text-align:center;outline:none}
+.btn{padding:12px 40px;font-size:1.5rem;font-family:'Yomogi',cursive;background:var(--main-pink);color:#fff;border:none;border-radius:50px;cursor:pointer;z-index:25;} 
+@keyframes heartBeat{0%,100%{transform:scale(0.8)}20%{transform:scale(1.0)}}
+#dog-layer{display:none;position:absolute;top:0;left:0;width:100%;height:100%;z-index:2050;pointer-events:none}
+.emoji-char{position:absolute;font-size:3rem;line-height:1;transform:translate(-50%,-50%);transition:none}
+#btn-dog-exit{display:none;margin-top:20px;position:relative;bottom:auto;left:auto;transform:none;font-size:1.5rem;padding:10px 40px;background:var(--main-pink);border:3px solid #fff}
+</style>
+</head>
+<body>
+
+<div id="gate-overlay">
+    <div class="gate-title">WARNING: RESTRICTED AREA</div>
+    <div class="gate-subtitle">CLASSIFIED CONTENT / ADULT CONTENT</div>
+    <div class="contract-box">
+NON-DISCLOSURE & LIABILITY AGREEMENT
+Access to this system is strictly limited to authorized personnel who have received the Access Key directly from the Official Restricted Account.
+By entering the Access Key, you unconditionally agree to the following:
+AUTHORIZED ACCESS ONLY: You certify that you obtained the Access Key through the legitimate, private distribution channel. Any access via leaked keys, brute-force, or unauthorized sharing is a violation of the Computer Fraud and Abuse Act and relevant international laws.
+TRANSFER OF LIABILITY: If you access this content without explicit authorization, you hereby assume full legal liability for any consequences, legal actions, or damages. The developer/owner bears no responsibility for access by unauthorized parties.
+NON-DISCLOSURE AGREEMENT (NDA): You agree to keep all content, mechanics, and the Access Key strictly confidential. Public dissemination is prohibited.
+AGE VERIFICATION: You confirm that you are of legal age to view adult-oriented material in your jurisdiction.
+ABSOLUTE IMMUNITY & INDEMNIFICATION: Due to the strictly confidential nature of this access, you agree that the Developer is forever exempt from any liability. You agree to indemnify and hold the Developer harmless against any claims arising from your access. You explicitly waive your right to pursue any legal recourse against the Developer.
+    </div>
+    <div class="gate-input-area">
+        <input type="password" id="gate-pass" placeholder="ENTER ACCESS KEY" maxlength="8">
+        <button class="gate-btn" onclick="tryGateUnlock()">I ACCEPT & AUTHENTICATE</button>
+        <div class="gate-footer">ENTRY OF THE KEY CONSTITUTES A BINDING DIGITAL SIGNATURE TO THESE TERMS.</div>
+        <div id="gate-msg"></div>
+    </div>
+</div>
+
+<audio id="bgm-title" src="bgm_title.mp3" loop></audio>
+<audio id="bgm-stage1" src="bgm_bitter_st1.mp3" loop></audio>
+<audio id="bgm-ex" src="bgm_bitter_ex.mp3" loop></audio>
+<audio id="bgm-white-st1" src="bgm_white_st1.mp3" loop></audio>
+<audio id="bgm-white-ex" src="bgm_white_ex.mp3" loop></audio>
+<audio id="bgm-clear" src="bgm_clear.mp3" loop></audio>
+<audio id="bgm-yajuu-a" src="bgm_yajuu_a.mp3" loop></audio>
+<audio id="bgm-yajuu-b" src="bgm_yajuu_b.mp3" loop></audio>
+<audio id="bgm-dog" src="bgm_dog_run.mp3" loop></audio>
+<audio id="bgm-cz" src="cz.mp3" loop></audio>
+<audio id="bgm-gallery" src="bgm_gallery.mp3" loop></audio>
+
+<div id="volume-controls">
+    <div style="display:flex;gap:10px"><span onclick="setVolume('bgm',0,true,true)" style="cursor:pointer">BGM</span>
+        <div class="vol-bar-wrapper" id="bgm-ctrl"><div class="vol-bar active" onclick="setVolume('bgm',1,true,true)"></div><div class="vol-bar active" onclick="setVolume('bgm',2,true,true)"></div><div class="vol-bar active" onclick="setVolume('bgm',3,true,true)"></div><div class="vol-bar" onclick="setVolume('bgm',4,true,true)"></div><div class="vol-bar" onclick="setVolume('bgm',5,true,true)"></div></div>
+    </div>
+    <div style="display:flex;gap:10px"><span onclick="setVolume('se',0,true,true)" style="cursor:pointer">SE</span>
+        <div class="vol-bar-wrapper" id="se-ctrl"><div class="vol-bar active" onclick="setVolume('se',1,true,true)"></div><div class="vol-bar active" onclick="setVolume('se',2,true,true)"></div><div class="vol-bar active" onclick="setVolume('se',3,true,true)"></div><div class="vol-bar" onclick="setVolume('se',4,true,true)"></div><div class="vol-bar" onclick="setVolume('se',5,true,true)"></div></div>
+    </div>
+</div>
+
+<div id="hud-left">
+    <div id="hud-ball" class="hud-ball"></div>
+    <span style="font-size:1.5rem;color:#fff;text-shadow:2px 2px 0 #3e2723">×</span>
+    <span id="lives-val" style="font-size:2rem;color:#ff80ab;font-weight:bold;text-shadow:2px 2px 0 #3e2723">0</span>
+</div>
+
+<div id="title-screen" class="screen">
+    <h1 id="title-logo" style="font-size:min(3.5rem,10vw);z-index:10"><span style="color:#3e2723">BITTER</span> <span style="color:#ff80ab">&</span> <span style="color:#fff9c4">WHITE</span></h1>
+    <div id="star-container"></div>
+    <button id="start-btn" class="btn" onclick="triggerStart()">はじめる</button>
+    <button id="gallery-btn" class="btn" onclick="openGallery()">ぎゃらりぃ</button>
+</div>
+
+<div id="gallery-layer">
+    <div id="gallery-caption">IMAGE 1/4</div>
+    <div id="gallery-img-container">
+        <img id="gallery-img" src="" alt="gallery">
+    </div>
+    <div id="gallery-controls">
+        <button class="gal-btn" onclick="changeGalImage(-1)">←</button>
+        <button class="gal-btn" onclick="closeGallery()">もどる</button>
+        <button class="gal-btn" onclick="changeGalImage(1)">→</button>
+    </div>
+</div>
+
+<div id="pass-screen" class="screen" style="display:none">
+    <div class="input-container">
+        <div class="age-row">ねんれい <input type="text" id="ageInput" maxlength="6" style="width:100px"> さい</div>
+        <div class="input-row">チ <div class="heart-wrapper"><input type="text" id="passInput" maxlength="1"></div> コください💗</div>
+        <button class="btn" onclick="checkAll()">届け、このキモチ・・・！</button>
+        <p id="msg" style="color:#d81b60;margin-top:15px;font-weight:bold;min-height:1.2em"></p>
+    </div>
+</div>
+
+<div id="game-wrapper">
+    <div id="game-container">
+        <div id="bg-image-layer"></div>
+        <div id="yajuu-curtain"></div>
+        <div id="dog-layer">
+            <div id="emoji-dog" class="emoji-char">🐶</div>
+            <div id="emoji-hand" class="emoji-char">✋</div>
+        </div>
+        <div id="czech-layer">
+            <div id="czech-timer">00:00.00</div>
+            <div id="czech-msg">STAGE CLEAR</div>
+            <div class="flag-container" id="flag"></div>
+            <button id="btn-czech-exit" class="game-btn" onclick="saveAndExit('czech')">Konec</button>
+        </div>
+        <button id="btn-restart" class="game-btn" onclick="reloadGame()">はじめから</button>
+        <button id="btn-finish" class="game-btn" onclick="saveAndExit()">おわり</button>
+        <div id="heart-1" class="bitter-heart normal-heart" onclick="hc(event,'heart-1')"></div>
+        <div id="heart-2" class="bitter-heart normal-heart" onclick="hc(event,'heart-2')"></div>
+        <div id="heart-large" class="bitter-heart large-heart" onclick="hc(event,'heart-large')"></div>
+        <canvas id="game-canvas"></canvas>
+    </div>
+    <button id="btn-dog-exit" class="game-btn" onclick="saveAndExit('dog')">またね</button>
+</div>
+
+<script>
+// --- グローバル変数 ---
+const ac=new(window.AudioContext||window.webkitAudioContext),NW=1153,NH=1728,NM=150,YW=1664,YH=1216,YM=100;
+let bVol=0.6,sVol=0.6,cBgm=null,IW=NW,IH=NH,MH=NM,VW=IW,VH=IH+MH,ball,pad,run=false,lives=0,stg=1,blks=[],clkH=new Set(),hBlks=[],stgClr=false,pHid=false,exT=0,clrT=0,mode='black',yTrig=false,yAnim=false,gOv=false,goT=0;
 let dog={x:0,y:0,state:'idle',tx:0,ty:0},hand={x:0,y:0};
+let czStartT=0,czEndT=0;
+
 const fps=60,fpsInterval=1000/fps;let then=Date.now(),elapsed;
 const cv=document.getElementById('game-canvas'),ctx=cv.getContext('2d');
+
+// --- ギャラリー用変数 ---
+const galleryImages = [
+    { src: 'bitter_bg.png', name: 'BITTER MODE' },
+    { src: 'white_bg.png', name: 'WHITE MODE' },
+    { src: 'yajuu_bg_a.png', name: 'BEAST MODE 1' },
+    { src: 'yajuu_bg_b.png', name: 'BEAST MODE 2' }
+];
+let currentGalIdx = 0;
+
+// --- ゲート制御システム ---
+window.onload = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const skip = urlParams.get('skip_gate') === 'true'; 
+    const auth = localStorage.getItem('bw_gate_cleared') === 'true';
+    if (skip || auth) {
+        document.getElementById('gate-overlay').style.display = 'none';
+        initGameSystem(); 
+    }
+    renderStars();
+};
+
+function tryGateUnlock() {
+    const input = document.getElementById('gate-pass');
+    const msg = document.getElementById('gate-msg');
+    if (input.value === '20260214') {
+        localStorage.setItem('bw_gate_cleared', 'true'); 
+        document.getElementById('gate-overlay').style.display = 'none';
+        initGameSystem(); 
+    } else {
+        msg.innerText = "ACCESS DENIED";
+        input.value = "";
+    }
+}
+
+function reloadGame() {
+    const url = window.location.href.split('?')[0];
+    window.location.href = url + "?skip_gate=true";
+}
+
+function initGameSystem() {
+    loadVol();
+    createChoco();
+    swBgm('bgm-title');
+    const resumeAudio = () => {
+        if(ac.state==='suspended')ac.resume();
+        if(cBgm&&cBgm.paused)cBgm.play();
+    };
+    document.addEventListener('click', resumeAudio, {once:true});
+    document.addEventListener('touchstart', resumeAudio, {once:true});
+}
+
+// --- ▼▼▼ セーブデータ & スター & ギャラリー制御 ▼▼▼ ---
+function saveAndExit(forceMode) {
+    let target = forceMode || mode;
+    let data = JSON.parse(localStorage.getItem('bw_cleared') || '{}');
+    data[target] = true;
+    localStorage.setItem('bw_cleared', JSON.stringify(data));
+    reloadGame();
+}
+
+function isIntersecting(r1, r2) {
+    return !(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top);
+}
+
+function renderStars() {
+    const data = JSON.parse(localStorage.getItem('bw_cleared') || '{}');
+    const targets = ['black', 'white', 'dog', 'yajuu', 'czech'];
+    const clearedCount = targets.filter(t => data[t]).length;
+    const container = document.getElementById('star-container');
+    container.innerHTML = ''; 
+
+    // ★5個ならギャラリーボタンを表示
+    if (clearedCount === 5) {
+        document.getElementById('gallery-btn').style.display = 'inline-block';
+    }
+
+    if (clearedCount > 0) {
+        const placedStars = [];
+        const titleRect = document.getElementById('title-logo').getBoundingClientRect();
+        const btnRect = document.getElementById('start-btn').getBoundingClientRect();
+        // ギャラリーボタンも避ける対象に追加
+        const galBtn = document.getElementById('gallery-btn');
+        let galRect = {top:0,bottom:0,left:0,right:0};
+        if(galBtn.style.display !== 'none'){
+            galRect = galBtn.getBoundingClientRect();
+        }
+
+        const forbiddenZones = [
+            titleRect,
+            { top: btnRect.top - 150, bottom: btnRect.bottom + 20, left: btnRect.left - 20, right: btnRect.right + 20 },
+            { top: galRect.top - 20, bottom: galRect.bottom + 20, left: galRect.left - 20, right: galRect.right + 20 }
+        ];
+        
+        const starSize = Math.min(window.innerWidth, window.innerHeight) * 0.15; 
+
+        for (let i = 0; i < clearedCount; i++) {
+            let s = document.createElement('span');
+            s.className = 'star-badge';
+            s.innerText = '★';
+            s.style.animationDelay = (i * 0.1) + 's'; 
+            
+            if (clearedCount === 5) {
+                s.classList.add('star-gaming');
+            } else {
+                s.classList.add('star-twinkle');
+            }
+
+            let x, y, attempts = 0;
+            let collision;
+            do {
+                collision = false;
+                x = Math.random() * (window.innerWidth - starSize) + starSize/2;
+                y = Math.random() * (window.innerHeight - starSize) + starSize/2;
+                const thisStarRect = { top: y - starSize/2, bottom: y + starSize/2, left: x - starSize/2, right: x + starSize/2 };
+
+                for (const zone of forbiddenZones) {
+                    if (isIntersecting(thisStarRect, zone)) {
+                        collision = true; break;
+                    }
+                }
+                if (!collision) {
+                    for (const placed of placedStars) {
+                        const dx = x - placed.x, dy = y - placed.y;
+                        if (Math.sqrt(dx * dx + dy * dy) < starSize * 1.1) {
+                            collision = true; break;
+                        }
+                    }
+                }
+                attempts++;
+            } while (collision && attempts < 100);
+
+            s.style.left = `${x}px`;
+            s.style.top = `${y}px`;
+            s.style.transform = 'translate(-50%, -50%)';
+            container.appendChild(s);
+            placedStars.push({x, y});
+        }
+    }
+}
+
+// ギャラリー操作関数
+function openGallery(){
+    swBgm('bgm-gallery'); // BGM切り替え
+    document.getElementById('gallery-layer').style.display = 'flex';
+    currentGalIdx = 0;
+    updateGalImage();
+}
+function closeGallery(){
+    swBgm('bgm-title'); // BGM戻す
+    document.getElementById('gallery-layer').style.display = 'none';
+}
+function changeGalImage(dir){
+    currentGalIdx += dir;
+    if(currentGalIdx < 0) currentGalIdx = galleryImages.length - 1;
+    if(currentGalIdx >= galleryImages.length) currentGalIdx = 0;
+    updateGalImage();
+}
+function updateGalImage(){
+    const img = document.getElementById('gallery-img');
+    const cap = document.getElementById('gallery-caption');
+    // フェード効果
+    img.style.opacity = 0;
+    setTimeout(() => {
+        img.src = galleryImages[currentGalIdx].src;
+        cap.innerText = galleryImages[currentGalIdx].name + ` (${currentGalIdx+1}/${galleryImages.length})`;
+        img.onload = () => { img.style.opacity = 1; };
+    }, 200);
+}
+// --- ▲▲▲ ---
+
 function loadVol(){const b=localStorage.getItem('bw_bgm_vol'),s=localStorage.getItem('bw_se_vol');if(b)setVolume('bgm',parseInt(b),false,false);if(s)setVolume('se',parseInt(s),false,false)}
 function setVolume(t,l,p=true,toggle=false){
   const k='bw_'+t+'_vol';const c=parseInt(localStorage.getItem(k)||3);if(toggle&&l===1&&c===1)l=0;
   let v=l/5.0;if(t==='bgm'){bVol=v;if(cBgm)cBgm.volume=v;localStorage.setItem(k,l)}else{sVol=v;if(l>0&&p)pt(880,0.1);localStorage.setItem(k,l)}document.querySelectorAll(`#${t}-ctrl .vol-bar`).forEach((b,i)=>b.classList.toggle('active',i<l))}
 function swBgm(id){if(cBgm){cBgm.pause();cBgm.currentTime=0}if(!id)return;const n=document.getElementById(id);if(n){n.volume=bVol;n.play().catch(()=>{});cBgm=n}}
-document.addEventListener('click',()=>{if(ac.state==='suspended')ac.resume();if(cBgm&&cBgm.paused)cBgm.play()},{once:true});
-document.addEventListener('touchstart',()=>{if(ac.state==='suspended')ac.resume();if(cBgm&&cBgm.paused)cBgm.play()},{once:true});
+
 function pt(f,d=0.2){if(sVol<=0.01)return;if(ac.state==='suspended')ac.resume();const o=ac.createOscillator(),g=ac.createGain();o.frequency.setValueAtTime(f,ac.currentTime);g.gain.setValueAtTime(0.3*sVol,ac.currentTime);g.gain.exponentialRampToValueAtTime(0.0001,ac.currentTime+d);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}
-window.onload=()=>{loadVol();createChoco();swBgm('bgm-title')};
+
 function createChoco(){const cx=innerWidth/2,cy=innerHeight/2,off=innerWidth>600?250:150;for(let r=0;r<4;r++)for(let c=0;c<3;c++){let w=document.createElement('div'),b=document.createElement('div');w.className='piece-title white-piece-title';b.className='piece-title black-piece-title';w.style.left=(cx-off-50+c*17)+'px';w.style.top=(cy-65+r*33)+'px';b.style.left=(cx+off+c*17)+'px';b.style.top=(cy-65+r*33)+'px';document.body.append(w,b)}}
 function triggerStart(){pt(523.3);document.querySelectorAll('.piece-title').forEach(p=>{const rx=(Math.random()-0.5)*800,jy=-250-Math.random()*200;p.style.transform=`translate(${rx*0.2}px,${jy}px) rotate(${(Math.random()-0.5)*150}deg)`;setTimeout(()=>{p.style.transform=`translate(${rx}px,${innerHeight+1000}px)`;p.style.opacity='0'},250)});setTimeout(()=>{document.getElementById('title-screen').style.display='none';document.getElementById('pass-screen').style.display='flex'},1000)}
 function checkAll(){const ar=document.getElementById('ageInput').value.trim(),pw=document.getElementById('passInput').value.trim(),age=parseInt(ar.replace(/[０-９]/g,s=>String.fromCharCode(s.charCodeAt(0)-0xFEE0)));if(isNaN(age)){document.getElementById('msg').innerText="ねんれいを入力してね";return}lives=age;
-if(age<=17)init('dog');else if(age>=121&&age!=114514)document.getElementById('msg').innerText="年金でチョコ買えよ老いぼれ";else if(age==114514)init('yajuu');else if((pw=='ン'||pw=='ﾝ')&&age>=18&&age<=120)init('white');else if(pw=='ョ'||pw=='ｮ')init('black');else document.getElementById('msg').innerText="そんなキモチじゃ届かないよ・・・？"}
+if(age<=17)init('dog');else if(age>=121&&age!=114514)document.getElementById('msg').innerText="年金でチョコ買えよ老いぼれ";else if(age==114514)init('yajuu');else if((pw=='ン'||pw=='ﾝ')&&age>=18&&age<=120)init('white');else if((pw=='ェ'||pw=='ｪ')&&age>=18&&age<=120)init('czech');else if(pw=='ョ'||pw=='ｮ')init('black');else document.getElementById('msg').innerText="そんなキモチじゃ届かないよ・・・？"}
 function setHS(id,x,y,w,h){const e=document.getElementById(id);e.style.left=(x/VW*100)+'%';e.style.top=(y/VH*100)+'%';e.style.width=(w/VW*100)+'%';e.style.height=(h/VH*100)+'%';e.style.display='flex'}
 function drawStaticBlocks(m){
-    // Immediate render to prevent subliminal flash
     ctx.clearRect(0,0,VW,VH);
-    if(m==='dog') return;
+    if(m==='dog'||m==='czech') return;
     ctx.fillStyle=mode==='white'?'#ffffff':'#111';ctx.fillRect(0,IH,VW,MH);
     let blc=mode==='white'?'#fff9c4':mode==='yajuu'?'#f06292':'#3e2723',bld=mode==='white'?'#fff':mode==='yajuu'?'#ad1457':'#5d4037';
     blks.forEach(b=>{if(b.alive){ctx.fillStyle=blc;ctx.fillRect(b.x,b.y,b.w,b.h);ctx.strokeStyle=bld;ctx.lineWidth=2;ctx.strokeRect(b.x,b.y,b.w,b.h)}});
 }
-function init(m){mode=m;const c=document.getElementById('game-container'),bg=document.getElementById('bg-image-layer'),cu=document.getElementById('yajuu-curtain'),h1=document.getElementById('heart-1'),h2=document.getElementById('heart-2'),hL=document.getElementById('heart-large'),dl=document.getElementById('dog-layer');
-[h1,h2,hL].forEach(h=>{h.className='bitter-heart normal-heart';h.style='';if(h.id.includes('large'))h.className='bitter-heart large-heart';h.style.display='none'});dl.style.display='none';
+function initCzech(){
+    const HEIGHT_CHARS=30,WIDTH_CHARS=45;
+    const baseWord="チェコ",hiddenWord="チョコ";
+    const totalChars=HEIGHT_CHARS*WIDTH_CHARS;
+    const totalWords=Math.floor(totalChars/baseWord.length);
+    const targetWordIndex=Math.floor(Math.random()*totalWords);
+    const targetCharStartIndex=targetWordIndex*baseWord.length;
+    let html="",charCounter=0;
+    
+    for(let y=0;y<HEIGHT_CHARS;y++){
+        for(let x=0;x<WIDTH_CHARS;x++){
+            const nx=x/WIDTH_CHARS,ny=y/HEIGHT_CHARS;
+            let cC="";
+            let tL = ny<0.5 ? ny : 1.0-ny;
+            if(nx<tL)cC="b";else if(ny<0.5)cC="w";else cC="r";
+            
+            let charP="",isT=false;
+            if(charCounter>=targetCharStartIndex&&charCounter<targetCharStartIndex+baseWord.length){
+                charP=hiddenWord[charCounter-targetCharStartIndex];isT=true;
+            }else{
+                charP=baseWord[charCounter%baseWord.length];
+            }
+            if(isT) html+=`<span class="${cC} czech-char" onclick="czClear(this)">${charP}</span>`;
+            else html+=`<span class="${cC} czech-char" onclick="czWrong()">${charP}</span>`;
+            charCounter++;
+        }
+        html+="<br>";
+    }
+    const f=document.getElementById("flag");
+    f.innerHTML=html;
+    const fs = Math.min(innerWidth/50, innerHeight/35);
+    f.style.fontSize = Math.max(10, fs) + "px";
+}
+function czWrong(){/* No Op */}
+function czClear(e){
+    if(stgClr)return;
+    stgClr=true;
+    czEndT=Date.now();
+    e.classList.remove('w','r','b');
+    e.style.color = '#3e2723'; 
+    e.style.textShadow = '1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff'; 
+    e.style.fontWeight = '900';
+    e.style.cursor = 'default';
+
+    const msg = document.getElementById('czech-msg');
+    msg.style.display='block';
+    msg.style.opacity='1'; 
+    document.getElementById('btn-czech-exit').style.display='block';
+    
+    setTimeout(()=>{
+        msg.style.opacity='0';
+        setTimeout(()=>{ msg.style.display='none'; }, 1000);
+    }, 3000);
+}
+
+function init(m){mode=m;const c=document.getElementById('game-container'),bg=document.getElementById('bg-image-layer'),cu=document.getElementById('yajuu-curtain'),h1=document.getElementById('heart-1'),h2=document.getElementById('heart-2'),hL=document.getElementById('heart-large'),dl=document.getElementById('dog-layer'),cl=document.getElementById('czech-layer');
+[h1,h2,hL].forEach(h=>{h.className='bitter-heart normal-heart';h.style='';if(h.id.includes('large'))h.className='bitter-heart large-heart';h.style.display='none'});dl.style.display='none';cl.style.display='none';
 if(m==='yajuu'){IW=YW;IH=YH;MH=YM;c.style.cssText=`height:auto;width:95vw;aspect-ratio:${YW}/${YH+YM};max-width:100vw;max-height:95vh;background:#1a1a1a`;bg.style.height='100%';swBgm('bgm-yajuu-a');bg.style.backgroundImage="url('yajuu_bg_b.png')";cu.style.display='block';cu.style.backgroundImage="url('yajuu_bg_a.png')";cu.style.clipPath='inset(0 0 0% 0)'}
 else if(m==='dog'){IW=NW;IH=NH;MH=0;c.style.cssText=`height:85vh;width:calc(85vh*${NW}/${NH});background:#8bc34a;border:10px solid #558b2f;box-sizing:border-box`;bg.style.display='none';swBgm('bgm-dog');dl.style.display='block';document.getElementById('btn-dog-exit').style.display='block';dog.x=IW/2;dog.y=IH/2;dog.state='idle'}
+else if(m==='czech'){
+    c.style.cssText='height:95vh;width:95vw;background:#222;display:flex;align-items:center;justify-content:center';
+    bg.style.display='none';
+    cl.style.display='flex'; 
+    swBgm('bgm-cz');
+    czStartT=Date.now();
+    stgClr=false;
+    document.getElementById('czech-msg').style.display='none';
+    document.getElementById('btn-czech-exit').style.display='none';
+    initCzech(); 
+}
 else{IW=NW;IH=NH;MH=NM;c.style='';bg.style.height=`calc(100% * ${NH}/${NH+NM})`;bg.style.display='block';cu.style.display='none';
 [h1,h2,hL].forEach(h=>h.style.display='flex');
 if(m==='white'){c.style.backgroundColor='#fff';swBgm('bgm-white-st1');bg.style.backgroundImage="url('white_bg.png')";[h1,h2,hL].forEach(h=>h.classList.add('white-heart'));setHS('heart-1',300,500,150,150);setHS('heart-2',600,1100,200,200);setHS('heart-large',275,1175,650,650);hBlks=[{id:'heart-1',x:300,y:500,w:150,h:150,alive:true},{id:'heart-2',x:600,y:1100,w:200,h:200,alive:true},{id:'heart-large',x:275,y:1175,w:650,h:650,alive:true}]}
 else{c.style.backgroundColor='#1a1a1a';swBgm('bgm-stage1');bg.style.backgroundImage="url('bitter_bg.png')";[h1,h2,hL].forEach(h=>h.classList.add('bitter-heart'));setHS('heart-1',300,400,150,150);setHS('heart-2',850,400,150,150);setHS('heart-large',200,1050,750,750);hBlks=[{id:'heart-1',x:300,y:400,w:150,h:150,alive:true},{id:'heart-2',x:850,y:400,w:150,h:150,alive:true},{id:'heart-large',x:200,y:1050,w:750,h:750,alive:true}]}}
-VW=IW;VH=IH+MH;cv.width=VW;cv.height=VH;document.getElementById('pass-screen').style.display='none';document.getElementById('game-wrapper').style.display='flex';document.getElementById('hud-left').style.display=m==='dog'?'none':'flex';document.getElementById('btn-restart').style.display='none';document.getElementById('btn-finish').style.display='none';
+VW=IW;VH=IH+MH;cv.width=VW;cv.height=VH;document.getElementById('pass-screen').style.display='none';document.getElementById('game-wrapper').style.display='flex';document.getElementById('hud-left').style.display=m==='dog'||m==='czech'?'none':'flex';document.getElementById('btn-restart').style.display='none';document.getElementById('btn-finish').style.display='none';
 pad={x:VW/2-125,y:VH-60,w:250,h:40};ball={x:VW/2,y:pad.y-30,dx:0,dy:0,r:20,active:false};mkBlks(m);drawStaticBlocks(m);then=Date.now();run=true;yTrig=false;yAnim=false;gOv=false;goT=0;requestAnimationFrame(loop)}
-function mkBlks(m){blks=[];if(m==='dog')return;const cs=10,bw=VW/cs,bh=40,rn=Math.ceil(IH/bh),tids=[174,184,194,204,214,224,234];let bi=0;for(let r=0;r<rn;r++)for(let c=0;c<cs;c++){blks.push({id:bi,x:c*bw,y:r*bh,w:bw,h:bh,alive:true,isTrigger:m==='yajuu'&&tids.includes(bi)});bi++}}
+function mkBlks(m){blks=[];if(m==='dog'||m==='czech')return;const cs=10,bw=VW/cs,bh=40,rn=Math.ceil(IH/bh),tids=[174,184,194,204,214,224,234];let bi=0;for(let r=0;r<rn;r++)for(let c=0;c<cs;c++){blks.push({id:bi,x:c*bw,y:r*bh,w:bw,h:bh,alive:true,isTrigger:m==='yajuu'&&tids.includes(bi)});bi++}}
 function yTrans(){yTrig=true;yAnim=true;run=false;swBgm(null);const th=IH,rh=40,tr=Math.ceil(th/rh),cu=document.getElementById('yajuu-curtain');let cr=0;const t=setInterval(()=>{cr++;cu.style.clipPath=`inset(0 0 ${cr*rh/th*100}% 0)`;if(cr>=tr){clearInterval(t);cu.style.display='none';yAnim=false;run=true;swBgm('bgm-yajuu-b')}},1000)}
 function hc(e,id){if(stgClr&&stg===1){for(let i=0;i<3;i++){const h=document.createElement('div');h.className='howawa';h.innerText='💗';h.style.left=e.clientX+(Math.random()-0.5)*50+'px';h.style.top=e.clientY+(Math.random()-0.5)*50+'px';document.body.appendChild(h);setTimeout(()=>h.remove(),1500)}if(!clkH.has(id)){pt(880,0.1);clkH.add(id)}if(clkH.size===3){stg=2;stgClr=false;pHid=false;exT=180;pt(1046.5,0.5);swBgm(mode==='white'?'bgm-white-ex':'bgm-ex');cv.classList.remove('canvas-pass');document.getElementById('btn-restart').style.display='none';document.querySelectorAll('.bitter-heart,.white-heart').forEach(h=>h.classList.remove('heart-active'));ball.active=false;ball.x=pad.x+pad.w/2;ball.y=pad.y-ball.r-5}}}
 function loop(){
@@ -43,6 +566,16 @@ requestAnimationFrame(loop);
 const now=Date.now();elapsed=now-then;
 if(elapsed<=fpsInterval)return;
 then=now-(elapsed%fpsInterval);
+if(mode==='czech'){
+    if(!stgClr){
+        const diff=now-czStartT;
+        const m=Math.floor(diff/60000).toString().padStart(2,'0');
+        const s=Math.floor((diff%60000)/1000).toString().padStart(2,'0');
+        const ms=Math.floor((diff%1000)/10).toString().padStart(2,'0');
+        document.getElementById('czech-timer').innerText=`${m}:${s}.${ms}`;
+    }
+    return;
+}
 ctx.clearRect(0,0,VW,VH);
 if(mode==='dog'){
 const eh=document.getElementById('emoji-hand'),ed=document.getElementById('emoji-dog');eh.style.left=(hand.x/VW*100)+'%';eh.style.top=(hand.y/VH*100)+'%';ed.style.left=(dog.x/VW*100)+'%';ed.style.top=(dog.y/VH*100)+'%';
@@ -61,14 +594,14 @@ document.getElementById('hud-ball').style.backgroundColor=bc;
 if(stg===2&&exT>0){ctx.fillStyle=`rgba(255,255,255,${Math.min(1,exT/60)})`;ctx.font="bold 120px 'Yomogi'";ctx.textAlign="center";ctx.fillText("EX STAGE",VW/2,VH/2);ctx.textAlign="start";exT--}
 if(stgClr&&clrT>0){ctx.fillStyle=`rgba(255,255,255,${Math.min(1,clrT/60)})`;ctx.font="bold 120px 'Yomogi'";ctx.textAlign="center";ctx.fillText("STAGE CLEAR",VW/2,VH/2);ctx.textAlign="start";clrT--}
 if(stg===1&&!stgClr){let blc=mode==='white'?'#fff9c4':mode==='yajuu'?'#f06292':'#3e2723',bld=mode==='white'?'#fff':mode==='yajuu'?'#ad1457':'#5d4037';blks.forEach(b=>{if(b.alive){ctx.fillStyle=blc;ctx.fillRect(b.x,b.y,b.w,b.h);ctx.strokeStyle=bld;ctx.lineWidth=2;ctx.strokeRect(b.x,b.y,b.w,b.h)}})}
-if(gOv){ctx.fillStyle="#ff80ab";ctx.font="bold 100px 'Yomogi'";ctx.textAlign="center";ctx.fillText("GAME OVER",VW/2,VH/2);ctx.textAlign="start";goT--;if(goT<=0)location.reload();}
+if(gOv){ctx.fillStyle="#ff80ab";ctx.font="bold 100px 'Yomogi'";ctx.textAlign="center";ctx.fillText("GAME OVER",VW/2,VH/2);ctx.textAlign="start";goT--;if(goT<=0)reloadGame();}
 else if(run||(!run&&!yAnim)){if(!pHid){ctx.fillStyle=pc;ctx.beginPath();ctx.roundRect(pad.x,pad.y,pad.w,pad.h,15);ctx.fill()}if(ball.active||(!stgClr&&!ball.active&&!pHid)){ctx.fillStyle=bc;ctx.beginPath();ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);ctx.fill()}}
 if(run&&!gOv){if(ball.active){const st=4;let sx=ball.dx/st,sy=ball.dy/st;for(let i=0;i<st;i++){ball.x+=sx;ball.y+=sy;if(ball.x<ball.r){ball.x=ball.r;ball.dx=Math.abs(ball.dx);sx=ball.dx/st}if(ball.x>VW-ball.r){ball.x=VW-ball.r;ball.dx=-Math.abs(ball.dx);sx=ball.dx/st}if(ball.y<ball.r){ball.y=ball.r;ball.dy=Math.abs(ball.dy);sy=ball.dy/st}
 if(!pHid&&ball.dy>0&&ball.y+ball.r>=pad.y&&ball.y-ball.r<=pad.y+pad.h&&ball.x+ball.r>=pad.x&&ball.x-ball.r<=pad.x+pad.w){ball.dy=-Math.abs(ball.dy);ball.y=pad.y-ball.r-2;sy=ball.dy/st;pt(660,0.1)}
 if(stg===1&&!stgClr){blks.forEach(b=>{if(b.alive){if(ball.x+ball.r>b.x&&ball.x-ball.r<b.x+b.w&&ball.y+ball.r>b.y&&ball.y-ball.r<b.y+b.h){b.alive=false;pt(400,0.05);if(mode==='yajuu'&&b.isTrigger&&!yTrig)yTrans()}}})}
 if(stg===2&&!stgClr){hBlks.forEach(h=>{if(h.alive){if(ball.x+ball.r>h.x&&ball.x-ball.r<h.x+h.w&&ball.y+ball.r>h.y&&ball.y-ball.r<h.y+h.h){h.alive=false;ball.dy*=-1;sy=ball.dy/st;pt(220,0.3);document.getElementById(h.id).style.display='none'}}})}}
 if(ball.y>VH){lives--;if(lives<=0){gOv=true;goT=300;ball.active=false}else ball.active=false}}else if(!stgClr&&!pHid){ball.x=pad.x+pad.w/2;ball.y=pad.y-ball.r-5}
-if(stg===1&&!stgClr){if(blks.filter(b=>b.alive).length===0&&blks.length>0){ball.active=false;stgClr=true;clrT=240;pHid=true;const b=document.getElementById('btn-restart');b.style.display='block';if(mode==='yajuu'){swBgm('bgm-clear');b.innerText="終わり！閉廷！・・・以上！皆解散！";b.style.fontSize="1.0rem";b.style.width="90%"}else{b.innerText="はじめから";b.style.fontSize="1.2rem";b.style.width="auto";pt(440,0.2);document.querySelectorAll('.bitter-heart,.white-heart').forEach(h=>h.classList.add('heart-active'));cv.classList.add('canvas-pass')}}}
+if(stg===1&&!stgClr){if(blks.filter(b=>b.alive).length===0&&blks.length>0){ball.active=false;stgClr=true;clrT=240;pHid=true;const b=document.getElementById('btn-restart');b.style.display='block';if(mode==='yajuu'){swBgm('bgm-clear');b.innerText="終わり！閉廷！・・・以上！皆解散！";b.style.fontSize="1.0rem";b.style.width="90%";b.onclick=function(){saveAndExit('yajuu')}}else{b.innerText="はじめから";b.style.fontSize="1.2rem";b.style.width="auto";b.onclick=function(){reloadGame()};pt(440,0.2);document.querySelectorAll('.bitter-heart,.white-heart').forEach(h=>h.classList.add('heart-active'));cv.classList.add('canvas-pass')}}}
 if(stg===2&&!stgClr){if(hBlks.filter(b=>b.alive).length===0){ball.active=false;stgClr=true;clrT=240;pHid=true;document.getElementById('btn-finish').style.display='block';swBgm('bgm-clear')}}}}}
 function hm(e){
 const r=cv.getBoundingClientRect(),x=e.touches?e.touches[0].clientX:e.clientX,y=e.touches?e.touches[0].clientY:e.clientY,s=VW/r.width,sh=VH/r.height;
