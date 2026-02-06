@@ -12,11 +12,6 @@
     const urlParams = new URLSearchParams(window.location.search);
     const skip = urlParams.get('skip_gate') === 'true'; 
     const auth = localStorage.getItem('bw_gate_cleared') === 'true';
-<<<<<<< HEAD
-=======
-    
-    // もし認証済みなら、警告画面を強制的に消すスタイルを埋め込む
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
     if (skip || auth) {
         document.write('<style>#gate-overlay { display: none !important; }</style>');
     }
@@ -29,7 +24,6 @@ body,html{margin:0;padding:0;height:100%;font-family:'Yomogi',cursive;background
 
 /* ▼▼▼ 法的警告ゲート ▼▼▼ */
 #gate-overlay {
-<<<<<<< HEAD
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
     background-color: #000000; color: #ff0000;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -42,58 +36,10 @@ body,html{margin:0;padding:0;height:100%;font-family:'Yomogi',cursive;background
     border: 1px solid #ff0000; padding: 20px; margin-bottom: 20px;
     text-align: left; white-space: pre-wrap; font-size: 1.0rem; line-height: 1.5;
     background-color: rgba(20, 0, 0, 0.8); box-shadow: inset 0 0 20px #300;
-=======
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #000000;
-    color: #ff0000;
-    display: flex; /* 基本は表示 */
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    text-align: center;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.gate-title {
-    font-size: min(2.5rem, 8vw);
-    font-weight: bold;
-    margin-bottom: 10px;
-    border-bottom: 2px solid #ff0000;
-    padding-bottom: 10px;
-    letter-spacing: 2px;
-}
-.gate-subtitle {
-    font-size: min(1.2rem, 5vw);
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-.contract-box {
-    width: 100%;
-    max-width: 800px;
-    height: 50vh;
-    overflow-y: auto;
-    border: 1px solid #ff0000;
-    padding: 20px;
-    margin-bottom: 20px;
-    text-align: left;
-    white-space: pre-wrap;
-    font-size: 1.0rem;
-    line-height: 1.5;
-    background-color: rgba(20, 0, 0, 0.8);
-    box-shadow: inset 0 0 20px #300;
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
 }
 .contract-box::-webkit-scrollbar { width: 10px; }
 .contract-box::-webkit-scrollbar-track { background: #300; }
 .contract-box::-webkit-scrollbar-thumb { background: #ff0000; border-radius: 5px; }
-<<<<<<< HEAD
 .gate-input-area { display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%; }
 input#gate-pass {
     font-family: 'Yomogi', cursive; background: #000; border: 2px solid #ff0000; color: #ff0000;
@@ -193,65 +139,6 @@ button.gate-btn:hover { background: #000; color: #ff0000; box-shadow: 0 0 15px #
 /* --- ゲーム本体CSS --- */
 .screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;position:relative}
 .piece-title{width:16px;height:32px;border-radius:2px;position:fixed;transition:transform 3.5s cubic-bezier(0.22,1,0.36,1),opacity 3s;z-index:1000;pointer-events:none;}
-=======
-
-.gate-input-area {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-    width: 100%;
-}
-
-input#gate-pass {
-    font-family: 'Yomogi', cursive;
-    background: #000;
-    border: 2px solid #ff0000;
-    color: #ff0000;
-    font-size: 1.5rem;
-    padding: 10px;
-    text-align: center;
-    outline: none;
-    width: min(300px, 80vw);
-    border-radius: 5px;
-}
-input#gate-pass::placeholder { color: #800000; }
-
-button.gate-btn {
-    font-family: 'Yomogi', cursive;
-    background: #ff0000;
-    color: #000;
-    border: 2px solid #ff0000;
-    padding: 12px 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 50px;
-    transition: all 0.2s;
-}
-button.gate-btn:hover {
-    background: #000;
-    color: #ff0000;
-    box-shadow: 0 0 15px #ff0000;
-}
-
-.gate-footer {
-    font-size: 0.9rem;
-    margin-top: 15px;
-    opacity: 0.8;
-}
-
-#gate-msg {
-    color: #ff0000;
-    height: 1.5em;
-    font-weight: bold;
-    text-shadow: 0 0 5px #f00;
-}
-
-/* --- 以下、ゲーム本体CSS --- */
-.screen{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;position:relative}
-.piece-title{width:16px;height:32px;border-radius:2px;position:fixed;transition:transform 3.5s cubic-bezier(0.22,1,0.36,1),opacity 3s;z-index:1000}
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
 .black-piece-title{background:var(--black-choco);border:1.5px solid #5d4037}
 .white-piece-title{background:var(--white-choco);border:1.5px solid #fff}
 #game-wrapper{display:none;width:100vw;height:100vh;background:#000;position:fixed;top:0;left:0;z-index:2000;flex-direction:column;align-items:center;justify-content:center}
@@ -286,11 +173,7 @@ input[type="text"]{font-family:'Yomogi',cursive;border:3px solid var(--main-pink
 .heart-wrapper::before{left:35px;transform:rotate(-45deg);transform-origin:0 100%}
 .heart-wrapper::after{left:0;transform:rotate(45deg);transform-origin:100% 100%}
 #passInput{position:relative;width:50px;height:50px;z-index:10;border:none;background:0 0;color:#fff;font-size:2rem;text-align:center;outline:none}
-<<<<<<< HEAD
 .btn{padding:12px 40px;font-size:1.5rem;font-family:'Yomogi',cursive;background:var(--main-pink);color:#fff;border:none;border-radius:50px;cursor:pointer;z-index:25;} 
-=======
-.btn{padding:12px 40px;font-size:1.5rem;font-family:'Yomogi',cursive;background:var(--main-pink);color:#fff;border:none;border-radius:50px;cursor:pointer}
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
 @keyframes heartBeat{0%,100%{transform:scale(0.8)}20%{transform:scale(1.0)}}
 #dog-layer{display:none;position:absolute;top:0;left:0;width:100%;height:100%;z-index:2050;pointer-events:none}
 .emoji-char{position:absolute;font-size:3rem;line-height:1;transform:translate(-50%,-50%);transition:none}
@@ -302,28 +185,16 @@ input[type="text"]{font-family:'Yomogi',cursive;border:3px solid var(--main-pink
 <div id="gate-overlay">
     <div class="gate-title">WARNING: RESTRICTED AREA</div>
     <div class="gate-subtitle">CLASSIFIED CONTENT / ADULT CONTENT</div>
-<<<<<<< HEAD
-=======
-    
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
     <div class="contract-box">
 NON-DISCLOSURE & LIABILITY AGREEMENT
 Access to this system is strictly limited to authorized personnel who have received the Access Key directly from the Official Restricted Account.
 By entering the Access Key, you unconditionally agree to the following:
-<<<<<<< HEAD
-=======
-
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
 AUTHORIZED ACCESS ONLY: You certify that you obtained the Access Key through the legitimate, private distribution channel. Any access via leaked keys, brute-force, or unauthorized sharing is a violation of the Computer Fraud and Abuse Act and relevant international laws.
 TRANSFER OF LIABILITY: If you access this content without explicit authorization, you hereby assume full legal liability for any consequences, legal actions, or damages. The developer/owner bears no responsibility for access by unauthorized parties.
 NON-DISCLOSURE AGREEMENT (NDA): You agree to keep all content, mechanics, and the Access Key strictly confidential. Public dissemination is prohibited.
 AGE VERIFICATION: You confirm that you are of legal age to view adult-oriented material in your jurisdiction.
 ABSOLUTE IMMUNITY & INDEMNIFICATION: Due to the strictly confidential nature of this access, you agree that the Developer is forever exempt from any liability. You agree to indemnify and hold the Developer harmless against any claims arising from your access. You explicitly waive your right to pursue any legal recourse against the Developer.
     </div>
-<<<<<<< HEAD
-=======
-    
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
     <div class="gate-input-area">
         <input type="password" id="gate-pass" placeholder="ENTER ACCESS KEY" maxlength="8">
         <button class="gate-btn" onclick="tryGateUnlock()">I ACCEPT & AUTHENTICATE</button>
@@ -331,10 +202,7 @@ ABSOLUTE IMMUNITY & INDEMNIFICATION: Due to the strictly confidential nature of 
         <div id="gate-msg"></div>
     </div>
 </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
 <audio id="bgm-title" src="bgm_title.mp3" loop></audio>
 <audio id="bgm-stage1" src="bgm_bitter_st1.mp3" loop></audio>
 <audio id="bgm-ex" src="bgm_bitter_ex.mp3" loop></audio>
@@ -344,11 +212,8 @@ ABSOLUTE IMMUNITY & INDEMNIFICATION: Due to the strictly confidential nature of 
 <audio id="bgm-yajuu-a" src="bgm_yajuu_a.mp3" loop></audio>
 <audio id="bgm-yajuu-b" src="bgm_yajuu_b.mp3" loop></audio>
 <audio id="bgm-dog" src="bgm_dog_run.mp3" loop></audio>
-<<<<<<< HEAD
 <audio id="bgm-cz" src="cz.mp3" loop></audio>
 <audio id="bgm-gallery" src="bgm_gallery.mp3" loop></audio>
-=======
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
 
 <div id="volume-controls">
     <div style="display:flex;gap:10px"><span onclick="setVolume('bgm',0,true,true)" style="cursor:pointer">BGM</span>
@@ -366,7 +231,6 @@ ABSOLUTE IMMUNITY & INDEMNIFICATION: Due to the strictly confidential nature of 
 </div>
 
 <div id="title-screen" class="screen">
-<<<<<<< HEAD
     <h1 id="title-logo" style="font-size:min(3.5rem,10vw);z-index:10"><span style="color:#3e2723">BITTER</span> <span style="color:#ff80ab">&</span> <span style="color:#fff9c4">WHITE</span></h1>
     <div id="star-container"></div>
     <button id="start-btn" class="btn" onclick="triggerStart()">はじめる</button>
@@ -383,10 +247,6 @@ ABSOLUTE IMMUNITY & INDEMNIFICATION: Due to the strictly confidential nature of 
         <button class="gal-btn" onclick="closeGallery()">もどる</button>
         <button class="gal-btn" onclick="changeGalImage(1)">→</button>
     </div>
-=======
-    <h1 style="font-size:min(3.5rem,10vw);z-index:10"><span style="color:#3e2723">BITTER</span> <span style="color:#ff80ab">&</span> <span style="color:#fff9c4">WHITE</span></h1>
-    <button class="btn" onclick="triggerStart()">はじめる</button>
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
 </div>
 
 <div id="pass-screen" class="screen" style="display:none">
@@ -406,7 +266,6 @@ ABSOLUTE IMMUNITY & INDEMNIFICATION: Due to the strictly confidential nature of 
             <div id="emoji-dog" class="emoji-char">🐶</div>
             <div id="emoji-hand" class="emoji-char">✋</div>
         </div>
-<<<<<<< HEAD
         <div id="czech-layer">
             <div id="czech-timer">00:00.00</div>
             <div id="czech-msg">STAGE CLEAR</div>
@@ -415,21 +274,12 @@ ABSOLUTE IMMUNITY & INDEMNIFICATION: Due to the strictly confidential nature of 
         </div>
         <button id="btn-restart" class="game-btn" onclick="reloadGame()">はじめから</button>
         <button id="btn-finish" class="game-btn" onclick="saveAndExit()">おわり</button>
-=======
-        <button id="btn-restart" class="game-btn" onclick="reloadGame()">はじめから</button>
-        <button id="btn-finish" class="game-btn" onclick="reloadGame()">おわり</button>
-        
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
         <div id="heart-1" class="bitter-heart normal-heart" onclick="hc(event,'heart-1')"></div>
         <div id="heart-2" class="bitter-heart normal-heart" onclick="hc(event,'heart-2')"></div>
         <div id="heart-large" class="bitter-heart large-heart" onclick="hc(event,'heart-large')"></div>
         <canvas id="game-canvas"></canvas>
     </div>
-<<<<<<< HEAD
     <button id="btn-dog-exit" class="game-btn" onclick="saveAndExit('dog')">またね</button>
-=======
-    <button id="btn-dog-exit" class="game-btn" onclick="reloadGame()">またね</button>
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
 </div>
 
 <script>
@@ -442,7 +292,6 @@ let czStartT=0,czEndT=0;
 const fps=60,fpsInterval=1000/fps;let then=Date.now(),elapsed;
 const cv=document.getElementById('game-canvas'),ctx=cv.getContext('2d');
 
-<<<<<<< HEAD
 // --- ギャラリー用変数 ---
 const galleryImages = [
     { src: 'bitter_bg.png', name: 'BITTER MODE' },
@@ -471,64 +320,21 @@ function tryGateUnlock() {
         localStorage.setItem('bw_gate_cleared', 'true'); 
         document.getElementById('gate-overlay').style.display = 'none';
         initGameSystem(); 
-=======
-// --- ゲート制御システム (鉄壁ガード) ---
-
-// 1. ページ読み込み完了時の処理
-window.onload = () => {
-    // 既にHead内のスクリプトで認証チェックは終わっているが、
-    // ここで改めてゲームを開始すべきか判断する。
-    const urlParams = new URLSearchParams(window.location.search);
-    const skip = urlParams.get('skip_gate') === 'true'; 
-    const auth = localStorage.getItem('bw_gate_cleared') === 'true';
-
-    if (skip || auth) {
-        // スタイルで隠しただけなので、改めてdisplay:noneを適用し、ゲームを開始する
-        document.getElementById('gate-overlay').style.display = 'none';
-        initGameSystem(); 
-    }
-    // 未認証の場合は何もしない（ゲートはCSSで表示されたまま）
-};
-
-// 2. ゲート認証処理
-function tryGateUnlock() {
-    const input = document.getElementById('gate-pass');
-    const msg = document.getElementById('gate-msg');
-    
-    if (input.value === '20260214') {
-        localStorage.setItem('bw_gate_cleared', 'true'); // 認証を保存
-        document.getElementById('gate-overlay').style.display = 'none';
-        initGameSystem(); // ゲームシステム起動
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
     } else {
         msg.innerText = "ACCESS DENIED";
         input.value = "";
     }
 }
 
-<<<<<<< HEAD
-=======
-// 3. ゲームリロード処理 (合言葉をつけてリロード)
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
 function reloadGame() {
     const url = window.location.href.split('?')[0];
     window.location.href = url + "?skip_gate=true";
 }
 
-<<<<<<< HEAD
 function initGameSystem() {
     loadVol();
     createChoco();
     swBgm('bgm-title');
-=======
-// 4. ゲームシステム起動 (BGMなどもここで初めて有効化)
-function initGameSystem() {
-    loadVol();
-    createChoco();
-    swBgm('bgm-title'); // ここでタイトルBGM再生開始
-
-    // 画面クリックでAudioContextを再開する処理もここで初めて登録
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
     const resumeAudio = () => {
         if(ac.state==='suspended')ac.resume();
         if(cBgm&&cBgm.paused)cBgm.play();
@@ -537,7 +343,6 @@ function initGameSystem() {
     document.addEventListener('touchstart', resumeAudio, {once:true});
 }
 
-<<<<<<< HEAD
 // --- ▼▼▼ セーブデータ & スター & ギャラリー制御 ▼▼▼ ---
 function saveAndExit(forceMode) {
     let target = forceMode || mode;
@@ -656,9 +461,6 @@ function updateGalImage(){
     }, 200);
 }
 // --- ▲▲▲ ---
-=======
-// --- 以下、既存のゲームロジック ---
->>>>>>> 26a6432cedf000359d319e7934cc7ec6c1bda7f7
 
 function loadVol(){const b=localStorage.getItem('bw_bgm_vol'),s=localStorage.getItem('bw_se_vol');if(b)setVolume('bgm',parseInt(b),false,false);if(s)setVolume('se',parseInt(s),false,false)}
 function setVolume(t,l,p=true,toggle=false){
